@@ -3,8 +3,25 @@ from fastapi import FastAPI, Depends, HTTPException, Header, Query
 from sqlalchemy import or_
 from sqlalchemy.orm import Session
 from .db import Base, engine, get_db
-from .models import Drill, Edge5Evaluation, UserDrill, UserPractice, PracticeSegment, Contribution
-from .schemas import Edge5Input, UserDrillCreate, UserPracticeCreate, ContributionCreate
+from .models import (
+    Drill,
+    Edge5Evaluation,
+    UserDrill,
+    UserPractice,
+    PracticeSegment,
+    Contribution,
+    DevelopmentGoal,
+    PracticeReview,
+    PracticeActivityReview
+)
+from .schemas import (
+    Edge5Input,
+    UserDrillCreate,
+    UserPracticeCreate,
+    ContributionCreate,
+    DevelopmentGoalCreate,
+    PracticeReviewCreate
+)
 from .seed import seed_drills
 
 VERSION="0.1.0"
@@ -276,3 +293,238 @@ def submit_contribution(payload:ContributionCreate,db:Session=Depends(get_db)):
                         consent_verified=True,snapshot_json=json.dumps(snapshot,default=str),notes=payload.notes))
     db.commit()
     return {'queue_id':qid,'status':'Submitted','snapshot_created':True,'message':'A snapshot was submitted; later private edits do not change the review copy.'}
+@app.post(
+    '/v1/development-goals',
+    dependencies=[Depends(require_write_key)]
+)
+def create_development_goal(
+    payload: DevelopmentGoalCreate,
+    db: Session = Depends(get_db)
+):
+    goal_id = 'DG-' + uuid.uuid4().hex[:12].upper()
+
+    rec = DevelopmentGoal(
+        goal_id=goal_id,
+        owner_key=payload.owner_key,
+        title=payload.title,
+        description=payload.description,
+        status='Active'
+    )
+
+    db.add(rec)
+    db.commit()
+
+    return {
+        'goal_id': goal_id,
+        'title': rec.title,
+        'status': rec.status
+    }
+
+
+@app.get(
+    '/v1/development-goals',
+    dependencies=[Depends(require_write_key)]
+)
+def list_development_goals(
+    owner_key: str,
+    db: Session = Depends(get_db)
+):
+    rows = (
+        db.query(DevelopmentGoal)
+        .filter(DevelopmentGoal.owner_key == owner_key)
+        .order_by(DevelopmentGoal.updated_at.desc())
+        .all()
+    )
+
+    return {
+        'count': len(rows),
+        'items': [
+            {
+                'goal_id': r.goal_id,
+                'title': r.title,
+                'description': r.description,
+                'status': r.status
+            }
+            for r in rows
+        ]
+    }
+
+
+@app.post(
+    '/v1/practice-reviews',
+    dependencies=[Depends(require_write_key)]
+)
+def save_practice_review(
+    payload: PracticeReviewCreate,
+    db: Session = Depends(get_db)
+):
+    if payload.user_practice_id is not None:
+        practice = db.get(UserPractice, payload.user_practice_id)
+
+        if not practice or practice.owner_key != payload.owner_key:
+            raise HTTPException(
+                404,
+                'User practice not found'
+            )
+
+    if payload.development_goal_id is not None:
+        goal = db.get(
+            DevelopmentGoal,
+            payload.development_goal_id
+        )
+
+        if not goal or goal.owner_key != payload.owner_key:
+            raise HTTPException(
+                404,
+                'Development goal not found'
+            )
+
+    review_id = 'PR-' + uuid.uuid4().hex[:12].upper()
+
+    review = PracticeReview(
+        review_id=review_id,
+        owner_key=payload.owner_key,
+        user_practice_id=payload.user_practice_id,
+        development_goal_id=payload.development_goal_id,
+        practice_goal=payload.practice_goal,
+        overall_result=payload.overall_result,
+        what_worked=payload.what_worked,
+        what_didnt=payload.what_didnt,
+        overall_observation=payload.overall_observation,
+        next_practice_decision=payload.next_practice_decision,
+        next_focus=payload.next_focus
+    )
+
+    db.add(review)
+
+    # Make sure the parent review exists before
+    # child activity-review rows are inserted.
+    db.flush()
+
+    for activity in payload.activities:
+        db.add(
+            PracticeActivityReview(
+                review_id=review_id,
+                segment_number=activity.segment_number,
+                activity_source=activity.activity_source,
+                activity_id=activity.activity_id,
+                activity_name=activity.activity_name,
+                intended_goal=activity.intended_goal,
+                goal_delivery=activity.goal_delivery,
+                focus_element_1=activity.focus_element_1,
+                focus_element_1_result=activity.focus_element_1_result,
+                focus_element_2=activity.focus_element_2,
+                focus_element_2_result=activity.focus_element_2_result,
+                coach_observation=activity.coach_observation,
+                adjustment_next_time=activity.adjustment_next_time,
+                would_use_again=activity.would_use_again
+            )
+        )
+
+    db.commit()
+
+    return {
+        'review_id': review_id,
+        'activities_saved': len(payload.activities),
+        'next_practice_decision': payload.next_practice_decision
+    }
+
+
+@app.get(
+    '/v1/practice-reviews',
+    dependencies=[Depends(require_write_key)]
+)
+def list_practice_reviews(
+    owner_key: str,
+    development_goal_id: str | None = None,
+    db: Session = Depends(get_db)
+):
+    qry = (
+        db.query(PracticeReview)
+        .filter(PracticeReview.owner_key == owner_key)
+    )
+
+    if development_goal_id is not None:
+        qry = qry.filter(
+            PracticeReview.development_goal_id
+            == development_goal_id
+        )
+
+    reviews = (
+        qry.order_by(PracticeReview.created_at.desc())
+        .all()
+    )
+
+    items = []
+
+    for review in reviews:
+        activities = (
+            db.query(PracticeActivityReview)
+            .filter(
+                PracticeActivityReview.review_id
+                == review.review_id
+            )
+            .order_by(PracticeActivityReview.id)
+            .all()
+        )
+
+        items.append({
+            'review_id': review.review_id,
+            'user_practice_id': review.user_practice_id,
+            'development_goal_id': (
+                review.development_goal_id
+            ),
+            'practice_goal': review.practice_goal,
+            'overall_result': review.overall_result,
+            'what_worked': review.what_worked,
+            'what_didnt': review.what_didnt,
+            'overall_observation': (
+                review.overall_observation
+            ),
+            'next_practice_decision': (
+                review.next_practice_decision
+            ),
+            'next_focus': review.next_focus,
+            'created_at': (
+                review.created_at.isoformat()
+                if review.created_at is not None
+                else None
+            ),
+            'activities': [
+                {
+                    'segment_number': a.segment_number,
+                    'activity_source': a.activity_source,
+                    'activity_id': a.activity_id,
+                    'activity_name': a.activity_name,
+                    'intended_goal': a.intended_goal,
+                    'goal_delivery': a.goal_delivery,
+                    'focus_element_1': (
+                        a.focus_element_1
+                    ),
+                    'focus_element_1_result': (
+                        a.focus_element_1_result
+                    ),
+                    'focus_element_2': (
+                        a.focus_element_2
+                    ),
+                    'focus_element_2_result': (
+                        a.focus_element_2_result
+                    ),
+                    'coach_observation': (
+                        a.coach_observation
+                    ),
+                    'adjustment_next_time': (
+                        a.adjustment_next_time
+                    ),
+                    'would_use_again': (
+                        a.would_use_again
+                    )
+                }
+                for a in activities
+            ]
+        })
+
+    return {
+        'count': len(items),
+        'items': items
+    }
