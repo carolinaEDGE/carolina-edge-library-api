@@ -38,7 +38,17 @@ def root():
     }
 @app.get('/health')
 def health(db: Session=Depends(get_db)):
-    return {'status':'ok','version':VERSION,'drills':db.query(Drill).count()}
+    total = db.query(Drill).count()
+    active = db.query(Drill).filter(Drill.active.is_(True)).count()
+    inactive = db.query(Drill).filter(Drill.active.is_(False)).count()
+
+    return {
+        'status': 'ok',
+        'version': VERSION,
+        'drills': total,
+        'active_drills': active,
+        'inactive_drills': inactive
+    }
 
 @app.get('/v1/drills')
 def search_drills(q: str|None=None, game_problem: str|None=None, family: str|None=None, age: str|None=None,
