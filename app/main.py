@@ -29,7 +29,13 @@ def drill_to_dict(d: Drill):
         'decision_cue_summary':d.decision_cue_summary,'decision_options_summary':d.decision_options_summary,
         'game_like_evidence':d.game_like_evidence,'age_context_notes':d.age_context_notes
     }
-
+@app.get('/')
+def root():
+    return {
+        'status': 'ok',
+        'service': 'carolina-edge-library-api',
+        'version': VERSION
+    }
 @app.get('/health')
 def health(db: Session=Depends(get_db)):
     return {'status':'ok','version':VERSION,'drills':db.query(Drill).count()}
