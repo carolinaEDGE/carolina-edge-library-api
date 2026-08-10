@@ -118,6 +118,7 @@ def save_user_practice(payload:UserPracticeCreate,db:Session=Depends(get_db)):
         age=payload.age,level=payload.level,players=payload.players,goalies=payload.goalies,coaches=payload.coaches,ice=payload.ice,
         total_minutes=payload.total_minutes,objective=payload.objective,edge_notes=payload.edge_notes,user_notes=payload.user_notes)
     db.add(rec)
+    db.flush()
     for s in payload.segments:
         rep=None if s.players_active is None or s.players_total is None else (s.players_active/s.players_total)>=0.5
         db.add(PracticeSegment(user_practice_id=uid,segment_number=s.segment_number,start_minute=s.start_minute,duration=s.duration,
