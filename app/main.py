@@ -43,6 +43,13 @@ with engine.begin() as conn:
         """
     )
 
+    conn.exec_driver_sql(
+        """
+        ALTER TABLE game_check_ins
+        ALTER COLUMN next_practice_decision TYPE TEXT
+        """
+    )
+
 with next(get_db()) as db:
     seed_drills(db)
 
