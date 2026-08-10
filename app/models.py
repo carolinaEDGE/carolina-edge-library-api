@@ -358,9 +358,9 @@ class GameCheckIn(Base):
     )
 
     next_practice_decision: Mapped[str | None] = mapped_column(
-        String(60),
-        nullable=True
-    )
+    Text,
+    nullable=True
+)
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
