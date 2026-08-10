@@ -190,6 +190,42 @@ def list_user_practices(
         'count': len(items),
         'items': items
     }
+@app.get('/v1/contributions', dependencies=[Depends(require_write_key)])
+def list_contributions(
+    owner_key: str,
+    db: Session = Depends(get_db)
+):
+    rows = (
+        db.query(Contribution)
+        .filter(Contribution.owner_key == owner_key)
+        .order_by(Contribution.submitted_at.desc())
+        .all()
+    )
+
+    return {
+        'count': len(rows),
+        'items': [
+            {
+                'queue_id': r.queue_id,
+                'content_type': r.content_type,
+                'user_content_id': r.user_content_id,
+                'owner_key': r.owner_key,
+                'consent_verified': r.consent_verified,
+                'status': r.status,
+                'notes': r.notes,
+                'submitted_at': (
+                    r.submitted_at.isoformat()
+                    if r.submitted_at is not None
+                    else None
+                )
+            }
+            for r in rows
+        ]
+    }
+
+
+@app.post('/v1/contributions',dependencies=[Depends(require_write_key)])
+def submit_contribution(payload:ContributionCreate,db:Session=Depends(get_db)):
 @app.post('/v1/contributions',dependencies=[Depends(require_write_key)])
 def submit_contribution(payload:ContributionCreate,db:Session=Depends(get_db)):
     if not payload.contribution_consent:
