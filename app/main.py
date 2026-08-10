@@ -255,9 +255,6 @@ def list_contributions(
         ]
     }
 
-
-@app.post('/v1/contributions',dependencies=[Depends(require_write_key)])
-def submit_contribution(payload:ContributionCreate,db:Session=Depends(get_db)):
 @app.post('/v1/contributions',dependencies=[Depends(require_write_key)])
 def submit_contribution(payload:ContributionCreate,db:Session=Depends(get_db)):
     if not payload.contribution_consent:
