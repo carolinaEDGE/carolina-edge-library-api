@@ -264,7 +264,7 @@ class PracticeActivityReview(Base):
         nullable=True
     )
 
-        goal_delivery: Mapped[str | None] = mapped_column(
+    goal_delivery: Mapped[str | None] = mapped_column(
         Text,
         nullable=True
     )
