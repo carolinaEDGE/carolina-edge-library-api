@@ -3,6 +3,7 @@ from fastapi import FastAPI, Depends, HTTPException, Header, Query
 from sqlalchemy import or_
 from sqlalchemy.orm import Session
 from .db import Base, engine, get_db
+
 from .models import (
     Drill,
     Edge5Evaluation,
@@ -12,7 +13,8 @@ from .models import (
     Contribution,
     DevelopmentGoal,
     PracticeReview,
-    PracticeActivityReview
+    PracticeActivityReview,
+    GameCheckIn
 )
 from .schemas import (
     Edge5Input,
@@ -20,7 +22,8 @@ from .schemas import (
     UserPracticeCreate,
     ContributionCreate,
     DevelopmentGoalCreate,
-    PracticeReviewCreate
+    PracticeReviewCreate,
+    GameCheckInCreate
 )
 from .seed import seed_drills
 
@@ -539,4 +542,95 @@ def list_practice_reviews(
     return {
         'count': len(items),
         'items': items
+    }
+@app.post(
+    '/v1/game-check-ins',
+    dependencies=[Depends(require_write_key)]
+)
+def save_game_check_in(
+    payload: GameCheckInCreate,
+    db: Session = Depends(get_db)
+):
+    goal = db.get(DevelopmentGoal, payload.development_goal_id)
+
+    if not goal or goal.owner_key != payload.owner_key:
+        raise HTTPException(
+            404,
+            'Development goal not found'
+        )
+
+    check_in_id = 'GC-' + uuid.uuid4().hex[:12].upper()
+
+    rec = GameCheckIn(
+        check_in_id=check_in_id,
+        owner_key=payload.owner_key,
+        development_goal_id=payload.development_goal_id,
+        game_label=payload.game_label,
+        game_date=payload.game_date,
+        transfer_result=payload.transfer_result,
+        what_showed_up=payload.what_showed_up,
+        what_still_breaks_down=payload.what_still_breaks_down,
+        coach_observation=payload.coach_observation,
+        next_implication=payload.next_implication,
+        next_practice_decision=payload.next_practice_decision
+    )
+
+    db.add(rec)
+    db.commit()
+
+    return {
+        'check_in_id': rec.check_in_id,
+        'development_goal_id': rec.development_goal_id,
+        'transfer_result': rec.transfer_result,
+        'next_practice_decision': rec.next_practice_decision,
+        'status': 'Saved'
+    }
+
+
+@app.get(
+    '/v1/game-check-ins',
+    dependencies=[Depends(require_write_key)]
+)
+def list_game_check_ins(
+    owner_key: str,
+    development_goal_id: str | None = None,
+    db: Session = Depends(get_db)
+):
+    query = db.query(GameCheckIn).filter(
+        GameCheckIn.owner_key == owner_key
+    )
+
+    if development_goal_id is not None:
+        query = query.filter(
+            GameCheckIn.development_goal_id == development_goal_id
+        )
+
+    rows = (
+        query
+        .order_by(GameCheckIn.created_at.desc())
+        .all()
+    )
+
+    return {
+        'count': len(rows),
+        'items': [
+            {
+                'check_in_id': r.check_in_id,
+                'development_goal_id': r.development_goal_id,
+                'game_label': r.game_label,
+                'game_date': r.game_date,
+                'transfer_result': r.transfer_result,
+                'what_showed_up': r.what_showed_up,
+                'what_still_breaks_down': r.what_still_breaks_down,
+                'coach_observation': r.coach_observation,
+                'next_implication': r.next_implication,
+                'next_practice_decision': r.next_practice_decision,
+                'created_at': (
+                    r.created_at.isoformat()
+                    if r.created_at is not None
+                    else None
+                )
+            }
+            for r in rows
+        ]
     }
