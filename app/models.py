@@ -137,3 +137,169 @@ class Contribution(Base):
     status: Mapped[str] = mapped_column(String(40), default="Submitted")
     notes: Mapped[str|None] = mapped_column(Text, nullable=True)
     submitted_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+class DevelopmentGoal(Base):
+    __tablename__ = "development_goals"
+
+    goal_id: Mapped[str] = mapped_column(String(60), primary_key=True)
+    owner_key: Mapped[str] = mapped_column(String(120), index=True)
+
+    title: Mapped[str] = mapped_column(String(200))
+    description: Mapped[str | None] = mapped_column(Text, nullable=True)
+
+    status: Mapped[str] = mapped_column(
+        String(40),
+        default="Active",
+        index=True
+    )
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        default=datetime.utcnow
+    )
+
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        default=datetime.utcnow,
+        onupdate=datetime.utcnow
+    )
+
+
+class PracticeReview(Base):
+    __tablename__ = "practice_reviews"
+
+    review_id: Mapped[str] = mapped_column(String(60), primary_key=True)
+
+    owner_key: Mapped[str] = mapped_column(String(120), index=True)
+
+    user_practice_id: Mapped[str | None] = mapped_column(
+        String(60),
+        nullable=True,
+        index=True
+    )
+
+    development_goal_id: Mapped[str | None] = mapped_column(
+        String(60),
+        ForeignKey("development_goals.goal_id"),
+        nullable=True,
+        index=True
+    )
+
+    practice_goal: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True
+    )
+
+    overall_result: Mapped[str | None] = mapped_column(
+        String(60),
+        nullable=True
+    )
+
+    what_worked: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True
+    )
+
+    what_didnt: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True
+    )
+
+    overall_observation: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True
+    )
+
+    next_practice_decision: Mapped[str | None] = mapped_column(
+        String(60),
+        nullable=True
+    )
+
+    next_focus: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True
+    )
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        default=datetime.utcnow
+    )
+
+
+class PracticeActivityReview(Base):
+    __tablename__ = "practice_activity_reviews"
+
+    id: Mapped[int] = mapped_column(
+        Integer,
+        primary_key=True,
+        autoincrement=True
+    )
+
+    review_id: Mapped[str] = mapped_column(
+        String(60),
+        ForeignKey("practice_reviews.review_id"),
+        index=True
+    )
+
+    segment_number: Mapped[int | None] = mapped_column(
+        Integer,
+        nullable=True
+    )
+
+    activity_source: Mapped[str | None] = mapped_column(
+        String(40),
+        nullable=True
+    )
+
+    activity_id: Mapped[str | None] = mapped_column(
+        String(60),
+        nullable=True
+    )
+
+    activity_name: Mapped[str] = mapped_column(
+        String(200)
+    )
+
+    intended_goal: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True
+    )
+
+    goal_delivery: Mapped[str | None] = mapped_column(
+        String(40),
+        nullable=True
+    )
+
+    focus_element_1: Mapped[str | None] = mapped_column(
+        String(60),
+        nullable=True
+    )
+
+    focus_element_1_result: Mapped[str | None] = mapped_column(
+        String(40),
+        nullable=True
+    )
+
+    focus_element_2: Mapped[str | None] = mapped_column(
+        String(60),
+        nullable=True
+    )
+
+    focus_element_2_result: Mapped[str | None] = mapped_column(
+        String(40),
+        nullable=True
+    )
+
+    coach_observation: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True
+    )
+
+    adjustment_next_time: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True
+    )
+
+    would_use_again: Mapped[str | None] = mapped_column(
+        String(40),
+        nullable=True
+    )
