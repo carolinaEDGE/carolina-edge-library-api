@@ -264,10 +264,10 @@ class PracticeActivityReview(Base):
         nullable=True
     )
 
-   goal_delivery: Mapped[str | None] = mapped_column(
-    Text,
-    nullable=True
-)
+        goal_delivery: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True
+    )
 
     focus_element_1: Mapped[str | None] = mapped_column(
         String(60),
@@ -275,19 +275,19 @@ class PracticeActivityReview(Base):
     )
 
     focus_element_1_result: Mapped[str | None] = mapped_column(
-    Text,
-    nullable=True
-)
+        Text,
+        nullable=True
+    )
 
     focus_element_2: Mapped[str | None] = mapped_column(
         String(60),
         nullable=True
     )
 
-   focus_element_2_result: Mapped[str | None] = mapped_column(
-    Text,
-    nullable=True
-)
+    focus_element_2_result: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True
+    )
 
     coach_observation: Mapped[str | None] = mapped_column(
         Text,
@@ -299,7 +299,7 @@ class PracticeActivityReview(Base):
         nullable=True
     )
 
-   would_use_again: Mapped[str | None] = mapped_column(
-    Text,
-    nullable=True
-)
+    would_use_again: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True
+    )
