@@ -1,0 +1,2131 @@
+[
+  {
+    "drill_id": "IQ-001",
+    "version": "1.0",
+    "name": "Gretzky Game",
+    "review_status": "Needs Review",
+    "family": "Hockey IQ & Decision Making",
+    "primary_game_problem": "Support and awareness in the offensive zone",
+    "secondary_game_problems": null,
+    "target_behaviors": "Develop awareness, support, scanning and decision-making.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Middle of practice",
+    "energy": "High",
+    "complexity": "Medium",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "Quarter-ice, 2v2–4v4. One support player ('Gretzky') behind the goal must receive a pass before a team can score.",
+    "how_it_runs": "Quarter-ice, 2v2–4v4. One support player ('Gretzky') behind the goal must receive a pass before a team can score.",
+    "coach_script": "'Play with your head up. Solve problems together. Keep moving and support the puck.'",
+    "coaching_cues": [
+      "Head up before receiving",
+      "Move after every pass",
+      "Support underneath pressure",
+      "Attack open ice"
+    ],
+    "guided_questions": [
+      "Before: What will you look for before receiving the puck?",
+      "During: What options did you recognize?",
+      "After: What decision helped your team most?"
+    ],
+    "observation_checklist": [
+      "□ Players scan before receiving",
+      "□ Move after passing",
+      "□ Communicate",
+      "□ Support away from the puck",
+      "□ Compete with purpose",
+      "□ Make independent decisions"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Players standing still → Award points for off-puck movement.",
+      "Crowding → Expand space briefly then reduce again.",
+      "No scanning → Pause and ask what players saw before receiving."
+    ],
+    "constraints_progressions": [
+      "One-touch passing",
+      "Shrink playing area",
+      "Two-second possession",
+      "Every player touches the puck"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Representative learning with continuous support and puck movement closely mirrors offensive-zone play.",
+    "search_tags": [
+      "Develop awareness",
+      "support",
+      "scanning and decision-making.",
+      "Hockey IQ & Decision Making",
+      "Support and awareness in the offensive zone"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "IQ-002",
+    "version": "1.0",
+    "name": "Four Goal Game",
+    "review_status": "Needs Review",
+    "family": "Hockey IQ & Decision Making",
+    "primary_game_problem": "Scanning and attacking open space",
+    "secondary_game_problems": null,
+    "target_behaviors": "Improve scanning and changing the point of attack.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Middle of practice",
+    "energy": "High",
+    "complexity": "Medium",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "3v3 or 4v4 with four small goals around the perimeter.",
+    "how_it_runs": "3v3 or 4v4 with four small goals around the perimeter.",
+    "coach_script": "'Play with your head up. Solve problems together. Keep moving and support the puck.'",
+    "coaching_cues": [
+      "Scan before receiving",
+      "Attack open space",
+      "Switch sides quickly"
+    ],
+    "guided_questions": [
+      "Before: What will you look for before receiving the puck?",
+      "During: What options did you recognize?",
+      "After: What decision helped your team most?"
+    ],
+    "observation_checklist": [
+      "□ Players scan before receiving",
+      "□ Move after passing",
+      "□ Communicate",
+      "□ Support away from the puck",
+      "□ Compete with purpose",
+      "□ Make independent decisions"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Players attack one goal only → Reward goals after switching sides.",
+      "Little movement → Reduce playing area."
+    ],
+    "constraints_progressions": [
+      "Three passes before scoring",
+      "Backhand goals only",
+      "Bonus for changing attack direction"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Builds offensive creativity, deception and transition awareness.",
+    "search_tags": [
+      "Hockey IQ & Decision Making",
+      "Improve scanning and changing the point of attack.",
+      "Scanning and attacking open space"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "IQ-003",
+    "version": "1.0",
+    "name": "Continuous 2v1",
+    "review_status": "Needs Review",
+    "family": "Hockey IQ & Decision Making",
+    "primary_game_problem": "Odd-man support and transition decisions",
+    "secondary_game_problems": null,
+    "target_behaviors": "Recognize numerical advantages and make quick decisions.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Middle of practice",
+    "energy": "High",
+    "complexity": "Medium",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "Continuous 2v1 with immediate transition to next group.",
+    "how_it_runs": "Continuous 2v1 with immediate transition to next group.",
+    "coach_script": "'Play with your head up. Solve problems together. Keep moving and support the puck.'",
+    "coaching_cues": [
+      "Attack with speed",
+      "Force defender to commit",
+      "Recover immediately"
+    ],
+    "guided_questions": [
+      "Before: What will you look for before receiving the puck?",
+      "During: What options did you recognize?",
+      "After: What decision helped your team most?"
+    ],
+    "observation_checklist": [
+      "□ Players scan before receiving",
+      "□ Move after passing",
+      "□ Communicate",
+      "□ Support away from the puck",
+      "□ Compete with purpose",
+      "□ Make independent decisions"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Predetermined passes → Ask attackers what they actually saw.",
+      "Poor spacing → Mark lanes with cones."
+    ],
+    "constraints_progressions": [
+      "Delay before pass",
+      "Different entry angles",
+      "Passive then active defender"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Improves rush offense, gap management and transition.",
+    "search_tags": [
+      "Hockey IQ & Decision Making",
+      "Odd-man support and transition decisions",
+      "Recognize numerical advantages and make quick decisions."
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "IQ-004",
+    "version": "1.0",
+    "name": "Cross-Ice 3v3",
+    "review_status": "Needs Review",
+    "family": "Hockey IQ & Decision Making",
+    "primary_game_problem": "Small-area possession and role changes",
+    "secondary_game_problems": null,
+    "target_behaviors": "Increase puck touches and rapid decisions.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Cross ice / 1/3 ice",
+    "time_min": null,
+    "practice_phase": "Middle of practice",
+    "energy": "High",
+    "complexity": "Medium",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "Cross-ice game with small nets or goalies.",
+    "how_it_runs": "Cross-ice game with small nets or goalies.",
+    "coach_script": "'Play with your head up. Solve problems together. Keep moving and support the puck.'",
+    "coaching_cues": [
+      "Support quickly",
+      "Transition immediately",
+      "Compete for loose pucks"
+    ],
+    "guided_questions": [
+      "Before: What will you look for before receiving the puck?",
+      "During: What options did you recognize?",
+      "After: What decision helped your team most?"
+    ],
+    "observation_checklist": [
+      "□ Players scan before receiving",
+      "□ Move after passing",
+      "□ Communicate",
+      "□ Support away from the puck",
+      "□ Compete with purpose",
+      "□ Make independent decisions"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Crowding → Widen playing area.",
+      "Low compete → Add scoring incentives."
+    ],
+    "constraints_progressions": [
+      "Every player touches puck",
+      "3-second possession",
+      "Backhand passes only"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Builds support, retrievals, defending and offensive creativity.",
+    "search_tags": [
+      "Hockey IQ & Decision Making",
+      "Increase puck touches and rapid decisions.",
+      "Small-area possession and role changes"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "IQ-005",
+    "version": "1.0",
+    "name": "Read & React Possession",
+    "review_status": "Needs Review",
+    "family": "Hockey IQ & Decision Making",
+    "primary_game_problem": "Read pressure and adapt decisions",
+    "secondary_game_problems": null,
+    "target_behaviors": "Develop anticipation and off-puck movement.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Middle of practice",
+    "energy": "High",
+    "complexity": "Medium",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "Small-area possession game with coach changing rules every 30–60 seconds.",
+    "how_it_runs": "Small-area possession game with coach changing rules every 30–60 seconds.",
+    "coach_script": "'Play with your head up. Solve problems together. Keep moving and support the puck.'",
+    "coaching_cues": [
+      "Keep scanning",
+      "Move to support",
+      "Protect then pass"
+    ],
+    "guided_questions": [
+      "Before: What will you look for before receiving the puck?",
+      "During: What options did you recognize?",
+      "After: What decision helped your team most?"
+    ],
+    "observation_checklist": [
+      "□ Players scan before receiving",
+      "□ Move after passing",
+      "□ Communicate",
+      "□ Support away from the puck",
+      "□ Compete with purpose",
+      "□ Make independent decisions"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Players freeze when rules change → Slow progression and discuss observations."
+    ],
+    "constraints_progressions": [
+      "One-touch",
+      "Reverse direction after turnover",
+      "Escape move before pass"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Improves possession under pressure and recognition of support options.",
+    "search_tags": [
+      "Develop anticipation and off-puck movement.",
+      "Hockey IQ & Decision Making",
+      "Read pressure and adapt decisions"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "PP-006",
+    "version": "1.0",
+    "name": "Corner Keep Away",
+    "review_status": "Needs Review",
+    "family": "Puck Protection & Battles",
+    "primary_game_problem": "Protect possession under corner pressure",
+    "secondary_game_problems": null,
+    "target_behaviors": "Protect the puck and escape pressure.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Middle",
+    "energy": "High",
+    "complexity": "Medium",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "2v2 or 3v3 in one corner with continuous possession.",
+    "how_it_runs": "2v2 or 3v3 in one corner with continuous possession.",
+    "coach_script": "'Win the puck with positioning first, then make a play. Protect before you attack.'",
+    "coaching_cues": [
+      "Protect with hips",
+      "Keep feet moving",
+      "Scan before pressure",
+      "Escape to open ice"
+    ],
+    "guided_questions": [
+      "Before: Where is the pressure coming from?",
+      "During: What helped you keep possession?",
+      "After: What created the best escape?"
+    ],
+    "observation_checklist": [
+      "□ Shoulder checks",
+      "□ Strong body position",
+      "□ Feet moving",
+      "□ Protects puck",
+      "□ Makes a play after winning possession",
+      "□ Safe competitive habits"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Players stop moving → Award points for movement.",
+      "Unsafe contact → Increase space and reinforce angling."
+    ],
+    "constraints_progressions": [
+      "Shrink area",
+      "Support pass before score",
+      "Two-second possession"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Players learn through representative game situations that require perception, body positioning, and decision-making under pressure.",
+    "search_tags": [
+      "Protect possession under corner pressure",
+      "Protect the puck and escape pressure.",
+      "Puck Protection & Battles"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "PP-007",
+    "version": "1.0",
+    "name": "King of the Circle",
+    "review_status": "Needs Review",
+    "family": "Puck Protection & Battles",
+    "primary_game_problem": "Win and retain inside position",
+    "secondary_game_problems": null,
+    "target_behaviors": "Build balance, puck protection and competitive confidence.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Middle",
+    "energy": "High",
+    "complexity": "Medium",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "Each player has a puck inside a faceoff circle and protects it while attempting to knock others away.",
+    "how_it_runs": "Each player has a puck inside a faceoff circle and protects it while attempting to knock others away.",
+    "coach_script": "'Win the puck with positioning first, then make a play. Protect before you attack.'",
+    "coaching_cues": [
+      "Wide base",
+      "Head up",
+      "Protect with body"
+    ],
+    "guided_questions": [
+      "Before: Where is the pressure coming from?",
+      "During: What helped you keep possession?",
+      "After: What created the best escape?"
+    ],
+    "observation_checklist": [
+      "□ Shoulder checks",
+      "□ Strong body position",
+      "□ Feet moving",
+      "□ Protects puck",
+      "□ Makes a play after winning possession",
+      "□ Safe competitive habits"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Too much congestion → Reduce players.",
+      "Heads down → Pause and reinforce scanning."
+    ],
+    "constraints_progressions": [
+      "Weak-hand only",
+      "Timed rounds",
+      "Passive start"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Players learn through representative game situations that require perception, body positioning, and decision-making under pressure.",
+    "search_tags": [
+      "Build balance",
+      "puck protection and competitive confidence.",
+      "Puck Protection & Battles",
+      "Win and retain inside position"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "PP-008",
+    "version": "1.0",
+    "name": "Race & Protect",
+    "review_status": "Needs Review",
+    "family": "Puck Protection & Battles",
+    "primary_game_problem": "Win race then protect the puck",
+    "secondary_game_problems": null,
+    "target_behaviors": "Win loose pucks and transition to offense.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Middle",
+    "energy": "High",
+    "complexity": "Medium",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "Two players race to a loose puck and play 1v1 to possession or goal.",
+    "how_it_runs": "Two players race to a loose puck and play 1v1 to possession or goal.",
+    "coach_script": "'Win the puck with positioning first, then make a play. Protect before you attack.'",
+    "coaching_cues": [
+      "Arrive under control",
+      "Protect first",
+      "Attack second"
+    ],
+    "guided_questions": [
+      "Before: Where is the pressure coming from?",
+      "During: What helped you keep possession?",
+      "After: What created the best escape?"
+    ],
+    "observation_checklist": [
+      "□ Shoulder checks",
+      "□ Strong body position",
+      "□ Feet moving",
+      "□ Protects puck",
+      "□ Makes a play after winning possession",
+      "□ Safe competitive habits"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Players over-skate puck → Slow entry and stress control."
+    ],
+    "constraints_progressions": [
+      "Start from different angles",
+      "Add support player"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Players learn through representative game situations that require perception, body positioning, and decision-making under pressure.",
+    "search_tags": [
+      "Puck Protection & Battles",
+      "Win loose pucks and transition to offense.",
+      "Win race then protect the puck"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "PP-009",
+    "version": "1.0",
+    "name": "Figure-8 Protection",
+    "review_status": "Needs Review",
+    "family": "Puck Protection & Battles",
+    "primary_game_problem": "Use edges and body position to protect",
+    "secondary_game_problems": null,
+    "target_behaviors": "Improve edge control while shielding the puck.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Middle",
+    "energy": "High",
+    "complexity": "Medium",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "Players skate figure-8s around cones before passive then active pressure.",
+    "how_it_runs": "Players skate figure-8s around cones before passive then active pressure.",
+    "coach_script": "'Win the puck with positioning first, then make a play. Protect before you attack.'",
+    "coaching_cues": [
+      "Edges first",
+      "Hands away from body",
+      "Scan ahead"
+    ],
+    "guided_questions": [
+      "Before: Where is the pressure coming from?",
+      "During: What helped you keep possession?",
+      "After: What created the best escape?"
+    ],
+    "observation_checklist": [
+      "□ Shoulder checks",
+      "□ Strong body position",
+      "□ Feet moving",
+      "□ Protects puck",
+      "□ Makes a play after winning possession",
+      "□ Safe competitive habits"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Too mechanical → Add decision at exit."
+    ],
+    "constraints_progressions": [
+      "Add defender",
+      "Escape move before pass"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Players learn through representative game situations that require perception, body positioning, and decision-making under pressure.",
+    "search_tags": [
+      "Improve edge control while shielding the puck.",
+      "Puck Protection & Battles",
+      "Use edges and body position to protect"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "PP-010",
+    "version": "1.0",
+    "name": "Escape Under Pressure",
+    "review_status": "Needs Review",
+    "family": "Puck Protection & Battles",
+    "primary_game_problem": "Escape pressure while retaining possession",
+    "secondary_game_problems": null,
+    "target_behaviors": "Escape pressure using deception and support.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Middle",
+    "energy": "High",
+    "complexity": "Medium",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "Retrieve puck along boards with defender applying pressure; escape and connect with support.",
+    "how_it_runs": "Retrieve puck along boards with defender applying pressure; escape and connect with support.",
+    "coach_script": "'Win the puck with positioning first, then make a play. Protect before you attack.'",
+    "coaching_cues": [
+      "Shoulder check",
+      "Protect then escape",
+      "Use deception"
+    ],
+    "guided_questions": [
+      "Before: Where is the pressure coming from?",
+      "During: What helped you keep possession?",
+      "After: What created the best escape?"
+    ],
+    "observation_checklist": [
+      "□ Shoulder checks",
+      "□ Strong body position",
+      "□ Feet moving",
+      "□ Protects puck",
+      "□ Makes a play after winning possession",
+      "□ Safe competitive habits"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Panic plays → Increase retrieval time initially, then add pressure."
+    ],
+    "constraints_progressions": [
+      "Forechecker starts closer",
+      "Immediate transition attack"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Players learn through representative game situations that require perception, body positioning, and decision-making under pressure.",
+    "search_tags": [
+      "Escape pressure using deception and support.",
+      "Escape pressure while retaining possession",
+      "Puck Protection & Battles"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "PS-011",
+    "version": "1.0",
+    "name": "Gates Passing",
+    "review_status": "Needs Review",
+    "family": "Passing & Support",
+    "primary_game_problem": "Pass through changing lanes",
+    "secondary_game_problems": null,
+    "target_behaviors": "Develop passing accuracy while scanning.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Skill Development",
+    "energy": "Medium-High",
+    "complexity": "Medium",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "Scatter cone gates across a quarter rink. Pairs move continuously and complete passes through as many gates as possible.",
+    "how_it_runs": "Scatter cone gates across a quarter rink. Pairs move continuously and complete passes through as many gates as possible.",
+    "coach_script": "'Pass with purpose, move immediately, and create the next option for your teammate.'",
+    "coaching_cues": [
+      "Head up before every pass",
+      "Pass to space",
+      "Move after passing",
+      "Communicate early"
+    ],
+    "guided_questions": [
+      "Before: Where will your next support option come from?",
+      "During: What did you see before making the pass?",
+      "After: How did your movement help your teammate?"
+    ],
+    "observation_checklist": [
+      "□ Players scan before passing",
+      "□ Players move after every pass",
+      "□ Good support angles",
+      "□ Accurate passes under pressure",
+      "□ Communication",
+      "□ Continuous movement"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Players stop moving → Count only passes after movement.",
+      "Eyes down → Pause and reinforce scanning before the pass."
+    ],
+    "constraints_progressions": [
+      "One-touch passing",
+      "Weak-hand only",
+      "Passive defenders",
+      "Timed challenge"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Players learn to create passing lanes, support the puck, and make decisions while moving rather than executing static passing patterns.",
+    "search_tags": [
+      "Develop passing accuracy while scanning.",
+      "Pass through changing lanes",
+      "Passing & Support"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "PS-012",
+    "version": "1.0",
+    "name": "Triangle Support",
+    "review_status": "Needs Review",
+    "family": "Passing & Support",
+    "primary_game_problem": "Create support triangles",
+    "secondary_game_problems": null,
+    "target_behaviors": "Create passing lanes through constant support.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Skill Development",
+    "energy": "Medium-High",
+    "complexity": "Medium",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "Three attackers maintain a triangle while one defender pressures.",
+    "how_it_runs": "Three attackers maintain a triangle while one defender pressures.",
+    "coach_script": "'Pass with purpose, move immediately, and create the next option for your teammate.'",
+    "coaching_cues": [
+      "Maintain spacing",
+      "Present your stick",
+      "Move before you're needed"
+    ],
+    "guided_questions": [
+      "Before: Where will your next support option come from?",
+      "During: What did you see before making the pass?",
+      "After: How did your movement help your teammate?"
+    ],
+    "observation_checklist": [
+      "□ Players scan before passing",
+      "□ Players move after every pass",
+      "□ Good support angles",
+      "□ Accurate passes under pressure",
+      "□ Communication",
+      "□ Continuous movement"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Triangle collapses → Use cones to illustrate spacing.",
+      "Late support → Freeze and discuss positioning."
+    ],
+    "constraints_progressions": [
+      "Two-touch maximum",
+      "Rotate defender",
+      "Shrink playing area"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Players learn to create passing lanes, support the puck, and make decisions while moving rather than executing static passing patterns.",
+    "search_tags": [
+      "Create passing lanes through constant support.",
+      "Create support triangles",
+      "Passing & Support"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "PS-013",
+    "version": "1.0",
+    "name": "Continuous Give-and-Go",
+    "review_status": "Needs Review",
+    "family": "Passing & Support",
+    "primary_game_problem": "Pass, move, and receive again",
+    "secondary_game_problems": null,
+    "target_behaviors": "Develop quick passing and immediate support.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Skill Development",
+    "energy": "Medium-High",
+    "complexity": "Medium",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "Players pass, accelerate into space, receive a return pass, and continue.",
+    "how_it_runs": "Players pass, accelerate into space, receive a return pass, and continue.",
+    "coach_script": "'Pass with purpose, move immediately, and create the next option for your teammate.'",
+    "coaching_cues": [
+      "Pass and move",
+      "Accelerate after passing",
+      "Receive in motion"
+    ],
+    "guided_questions": [
+      "Before: Where will your next support option come from?",
+      "During: What did you see before making the pass?",
+      "After: How did your movement help your teammate?"
+    ],
+    "observation_checklist": [
+      "□ Players scan before passing",
+      "□ Players move after every pass",
+      "□ Good support angles",
+      "□ Accurate passes under pressure",
+      "□ Communication",
+      "□ Continuous movement"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Players admire passes → Reward immediate movement.",
+      "Slow tempo → Shorten distances."
+    ],
+    "constraints_progressions": [
+      "Add defender",
+      "Backhand return pass",
+      "One-touch finish"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Players learn to create passing lanes, support the puck, and make decisions while moving rather than executing static passing patterns.",
+    "search_tags": [
+      "Develop quick passing and immediate support.",
+      "Pass, move, and receive again",
+      "Passing & Support"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "PS-014",
+    "version": "1.0",
+    "name": "Four-Corner Passing",
+    "review_status": "Needs Review",
+    "family": "Passing & Support",
+    "primary_game_problem": "Move puck and players through space",
+    "secondary_game_problems": null,
+    "target_behaviors": "Improve timing, receiving, and puck movement.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Skill Development",
+    "energy": "Medium-High",
+    "complexity": "Medium",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "Players occupy four corners and rotate after every pass.",
+    "how_it_runs": "Players occupy four corners and rotate after every pass.",
+    "coach_script": "'Pass with purpose, move immediately, and create the next option for your teammate.'",
+    "coaching_cues": [
+      "Call for puck",
+      "Receive with head up",
+      "Rotate quickly"
+    ],
+    "guided_questions": [
+      "Before: Where will your next support option come from?",
+      "During: What did you see before making the pass?",
+      "After: How did your movement help your teammate?"
+    ],
+    "observation_checklist": [
+      "□ Players scan before passing",
+      "□ Players move after every pass",
+      "□ Good support angles",
+      "□ Accurate passes under pressure",
+      "□ Communication",
+      "□ Continuous movement"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Crowding → Increase spacing.",
+      "Poor timing → Slow pace then build speed."
+    ],
+    "constraints_progressions": [
+      "Reverse direction",
+      "One-touch",
+      "Add second puck"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Players learn to create passing lanes, support the puck, and make decisions while moving rather than executing static passing patterns.",
+    "search_tags": [
+      "Improve timing",
+      "receiving",
+      "and puck movement.",
+      "Move puck and players through space",
+      "Passing & Support"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "PS-015",
+    "version": "1.0",
+    "name": "Support & Attack Game",
+    "review_status": "Needs Review",
+    "family": "Passing & Support",
+    "primary_game_problem": "Support the puck then attack",
+    "secondary_game_problems": null,
+    "target_behaviors": "Develop support beneath the puck and attacking with numbers.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Skill Development",
+    "energy": "Medium-High",
+    "complexity": "Medium",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "3v3 small-area game with bonus points for support passes before attacking.",
+    "how_it_runs": "3v3 small-area game with bonus points for support passes before attacking.",
+    "coach_script": "'Pass with purpose, move immediately, and create the next option for your teammate.'",
+    "coaching_cues": [
+      "Support underneath",
+      "Switch sides",
+      "Attack together"
+    ],
+    "guided_questions": [
+      "Before: Where will your next support option come from?",
+      "During: What did you see before making the pass?",
+      "After: How did your movement help your teammate?"
+    ],
+    "observation_checklist": [
+      "□ Players scan before passing",
+      "□ Players move after every pass",
+      "□ Good support angles",
+      "□ Accurate passes under pressure",
+      "□ Communication",
+      "□ Continuous movement"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Players force offense → Reward possession first.",
+      "Little communication → Bonus points for verbal support."
+    ],
+    "constraints_progressions": [
+      "Three-pass minimum",
+      "Every player touches puck",
+      "Immediate transition"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Players learn to create passing lanes, support the puck, and make decisions while moving rather than executing static passing patterns.",
+    "search_tags": [
+      "Develop support beneath the puck and attacking with numbers.",
+      "Passing & Support",
+      "Support the puck then attack"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "SS-016",
+    "version": "1.0",
+    "name": "Quick Release Shooting",
+    "review_status": "Needs Review",
+    "family": "Shooting & Scoring",
+    "primary_game_problem": "Release the puck before pressure closes",
+    "secondary_game_problems": null,
+    "target_behaviors": "Develop a fast, accurate release under pressure.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Skill/Competition",
+    "energy": "High",
+    "complexity": "Medium",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "Players receive passes in stride and shoot immediately. Rotate shooting locations.",
+    "how_it_runs": "Players receive passes in stride and shoot immediately. Rotate shooting locations.",
+    "coach_script": "'Attack to score, not just to shoot. Create an advantage before you release the puck.'",
+    "coaching_cues": [
+      "Shoot in stride",
+      "Head up before release",
+      "Recover for rebounds"
+    ],
+    "guided_questions": [
+      "Before: What will make this a high-quality scoring chance?",
+      "During: Why did you choose that shot?",
+      "After: What could create a better chance next time?"
+    ],
+    "observation_checklist": [
+      "□ Players attack dangerous ice",
+      "□ Quick release",
+      "□ Head up before shooting",
+      "□ Rebound habits",
+      "□ Net-front presence",
+      "□ Good shot selection"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Players dust off puck → Limit possession time.",
+      "Poor accuracy → Slow pace before increasing speed."
+    ],
+    "constraints_progressions": [
+      "No stickhandling",
+      "Forehand/backhand only",
+      "Passive defender"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Players develop scoring habits in representative game situations that reward quick decisions, movement, and finishing from realistic scoring areas.",
+    "search_tags": [
+      "Develop a fast",
+      "accurate release under pressure.",
+      "Release the puck before pressure closes",
+      "Shooting & Scoring"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "SS-017",
+    "version": "1.0",
+    "name": "Attack Triangle",
+    "review_status": "Needs Review",
+    "family": "Shooting & Scoring",
+    "primary_game_problem": "Create multiple scoring threats",
+    "secondary_game_problems": null,
+    "target_behaviors": "Create quality scoring chances through spacing and puck support.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Skill/Competition",
+    "energy": "High",
+    "complexity": "Medium",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "Three attackers versus one or two defenders attacking the net with continuous rotation.",
+    "how_it_runs": "Three attackers versus one or two defenders attacking the net with continuous rotation.",
+    "coach_script": "'Attack to score, not just to shoot. Create an advantage before you release the puck.'",
+    "coaching_cues": [
+      "Support underneath",
+      "Attack with speed",
+      "Force defenders to commit"
+    ],
+    "guided_questions": [
+      "Before: What will make this a high-quality scoring chance?",
+      "During: Why did you choose that shot?",
+      "After: What could create a better chance next time?"
+    ],
+    "observation_checklist": [
+      "□ Players attack dangerous ice",
+      "□ Quick release",
+      "□ Head up before shooting",
+      "□ Rebound habits",
+      "□ Net-front presence",
+      "□ Good shot selection"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Players bunch together → Mark lanes with cones.",
+      "Forced shots → Reward extra pass."
+    ],
+    "constraints_progressions": [
+      "Two-touch maximum",
+      "Mandatory cross-ice pass",
+      "Immediate transition"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Players develop scoring habits in representative game situations that reward quick decisions, movement, and finishing from realistic scoring areas.",
+    "search_tags": [
+      "Create multiple scoring threats",
+      "Create quality scoring chances through spacing and puck support.",
+      "Shooting & Scoring"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "SS-018",
+    "version": "1.0",
+    "name": "Rebound Chaos",
+    "review_status": "Needs Review",
+    "family": "Shooting & Scoring",
+    "primary_game_problem": "Win second-chance scoring opportunities",
+    "secondary_game_problems": null,
+    "target_behaviors": "Develop rebound recognition and second-effort scoring.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Skill/Competition",
+    "energy": "High",
+    "complexity": "Medium",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "Coach creates shots and rebounds while players compete to locate and finish loose pucks safely.",
+    "how_it_runs": "Coach creates shots and rebounds while players compete to locate and finish loose pucks safely.",
+    "coach_script": "'Attack to score, not just to shoot. Create an advantage before you release the puck.'",
+    "coaching_cues": [
+      "Stick on ice",
+      "Find rebounds quickly",
+      "Finish under control"
+    ],
+    "guided_questions": [
+      "Before: What will make this a high-quality scoring chance?",
+      "During: Why did you choose that shot?",
+      "After: What could create a better chance next time?"
+    ],
+    "observation_checklist": [
+      "□ Players attack dangerous ice",
+      "□ Quick release",
+      "□ Head up before shooting",
+      "□ Rebound habits",
+      "□ Net-front presence",
+      "□ Good shot selection"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Players collide with goalie → Reinforce crease awareness and controlled compete."
+    ],
+    "constraints_progressions": [
+      "Timed rebounds",
+      "Screens",
+      "Two pucks"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Players develop scoring habits in representative game situations that reward quick decisions, movement, and finishing from realistic scoring areas.",
+    "search_tags": [
+      "Develop rebound recognition and second-effort scoring.",
+      "Shooting & Scoring",
+      "Win second-chance scoring opportunities"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "SS-019",
+    "version": "1.0",
+    "name": "Change the Angle",
+    "review_status": "Needs Review",
+    "family": "Shooting & Scoring",
+    "primary_game_problem": "Change shooting angle to beat defender/goalie",
+    "secondary_game_problems": null,
+    "target_behaviors": "Improve shot quality by changing the release point.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Skill/Competition",
+    "energy": "High",
+    "complexity": "Medium",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "Players attack from the wall, move laterally, then shoot through or around traffic.",
+    "how_it_runs": "Players attack from the wall, move laterally, then shoot through or around traffic.",
+    "coach_script": "'Attack to score, not just to shoot. Create an advantage before you release the puck.'",
+    "coaching_cues": [
+      "Move feet first",
+      "Sell deception",
+      "Shoot through lane"
+    ],
+    "guided_questions": [
+      "Before: What will make this a high-quality scoring chance?",
+      "During: Why did you choose that shot?",
+      "After: What could create a better chance next time?"
+    ],
+    "observation_checklist": [
+      "□ Players attack dangerous ice",
+      "□ Quick release",
+      "□ Head up before shooting",
+      "□ Rebound habits",
+      "□ Net-front presence",
+      "□ Good shot selection"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Players shoot too early → Require one lateral move before release."
+    ],
+    "constraints_progressions": [
+      "Add defender",
+      "Screen goalie",
+      "Backhand finish"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Players develop scoring habits in representative game situations that reward quick decisions, movement, and finishing from realistic scoring areas.",
+    "search_tags": [
+      "Change shooting angle to beat defender/goalie",
+      "Improve shot quality by changing the release point.",
+      "Shooting & Scoring"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "SS-020",
+    "version": "1.0",
+    "name": "Net-Front Finish",
+    "review_status": "Needs Review",
+    "family": "Shooting & Scoring",
+    "primary_game_problem": "Create and finish net-front chances",
+    "secondary_game_problems": null,
+    "target_behaviors": "Score from rebounds, tips and screens.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Skill/Competition",
+    "energy": "High",
+    "complexity": "Medium",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "One player establishes net-front while teammates shoot from the perimeter.",
+    "how_it_runs": "One player establishes net-front while teammates shoot from the perimeter.",
+    "coach_script": "'Attack to score, not just to shoot. Create an advantage before you release the puck.'",
+    "coaching_cues": [
+      "Inside position",
+      "Active stick",
+      "Second effort"
+    ],
+    "guided_questions": [
+      "Before: What will make this a high-quality scoring chance?",
+      "During: Why did you choose that shot?",
+      "After: What could create a better chance next time?"
+    ],
+    "observation_checklist": [
+      "□ Players attack dangerous ice",
+      "□ Quick release",
+      "□ Head up before shooting",
+      "□ Rebound habits",
+      "□ Net-front presence",
+      "□ Good shot selection"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Players stand outside crease area → Reward inside body position and rebound recovery."
+    ],
+    "constraints_progressions": [
+      "Defender added",
+      "Low-high puck movement",
+      "Tip only"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Players develop scoring habits in representative game situations that reward quick decisions, movement, and finishing from realistic scoring areas.",
+    "search_tags": [
+      "Create and finish net-front chances",
+      "Score from rebounds",
+      "tips and screens.",
+      "Shooting & Scoring"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "RT-021",
+    "version": "1.0",
+    "name": "Retrieval to Attack",
+    "review_status": "Needs Review",
+    "family": "Retrievals & Transition",
+    "primary_game_problem": "Retrieve puck and transition to offense",
+    "secondary_game_problems": null,
+    "target_behaviors": "Develop efficient puck retrievals and quality first plays.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Team Concepts",
+    "energy": "High",
+    "complexity": "Medium-High",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "Coach rims or dumps a puck into the corner. Player shoulder checks, retrieves, escapes pressure, and attacks with support.",
+    "how_it_runs": "Coach rims or dumps a puck into the corner. Player shoulder checks, retrieves, escapes pressure, and attacks with support.",
+    "coach_script": "'Retrieve with purpose. Scan before you touch the puck. Make the first play that gives your team possession.'",
+    "coaching_cues": [
+      "Shoulder check early",
+      "Arrive under control",
+      "Protect then attack",
+      "Communicate"
+    ],
+    "guided_questions": [
+      "Before: Where is the pressure coming from?",
+      "During: What information did you gather before touching the puck?",
+      "After: What made your first play successful?"
+    ],
+    "observation_checklist": [
+      "□ Shoulder check before retrieval",
+      "□ Efficient skating route",
+      "□ Early communication",
+      "□ Strong first play",
+      "□ Support away from puck",
+      "□ Immediate transition"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Players retrieve blindly → Pause and reinforce scanning.",
+      "First pass forced → Encourage puck support."
+    ],
+    "constraints_progressions": [
+      "Forechecker starts closer",
+      "Mandatory escape move",
+      "Immediate attack after retrieval"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Effective transition teams retrieve pucks, scan early, communicate, and make quality first plays. These drills connect retrievals directly to game decisions.",
+    "search_tags": [
+      "Develop efficient puck retrievals and quality first plays.",
+      "Retrievals & Transition",
+      "Retrieve puck and transition to offense"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "RT-022",
+    "version": "1.0",
+    "name": "Reverse Breakout",
+    "review_status": "Needs Review",
+    "family": "Retrievals & Transition",
+    "primary_game_problem": "Recognize and execute a reverse option",
+    "secondary_game_problems": null,
+    "target_behaviors": "Recognize pressure and execute the correct breakout option.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Team Concepts",
+    "energy": "High",
+    "complexity": "Medium-High",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "Defense retrieves while forechecker pressures. Defender chooses wheel, reverse, or first pass.",
+    "how_it_runs": "Defense retrieves while forechecker pressures. Defender chooses wheel, reverse, or first pass.",
+    "coach_script": "'Retrieve with purpose. Scan before you touch the puck. Make the first play that gives your team possession.'",
+    "coaching_cues": [
+      "Read pressure",
+      "Communicate early",
+      "Deceive before passing"
+    ],
+    "guided_questions": [
+      "Before: Where is the pressure coming from?",
+      "During: What information did you gather before touching the puck?",
+      "After: What made your first play successful?"
+    ],
+    "observation_checklist": [
+      "□ Shoulder check before retrieval",
+      "□ Efficient skating route",
+      "□ Early communication",
+      "□ Strong first play",
+      "□ Support away from puck",
+      "□ Immediate transition"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Automatic reverses → Ask players why they chose the option.",
+      "Poor communication → Delay until verbal cues improve."
+    ],
+    "constraints_progressions": [
+      "Second forechecker",
+      "Quick-up option",
+      "Weak-side activation"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Effective transition teams retrieve pucks, scan early, communicate, and make quality first plays. These drills connect retrievals directly to game decisions.",
+    "search_tags": [
+      "Recognize and execute a reverse option",
+      "Recognize pressure and execute the correct breakout option.",
+      "Retrievals & Transition"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "RT-023",
+    "version": "1.0",
+    "name": "Three-Lane Transition",
+    "review_status": "Needs Review",
+    "family": "Retrievals & Transition",
+    "primary_game_problem": "Transition with lane support",
+    "secondary_game_problems": null,
+    "target_behaviors": "Develop speed and support through transition.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Team Concepts",
+    "energy": "High",
+    "complexity": "Medium-High",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "Three attackers move through designated lanes before transitioning to defense.",
+    "how_it_runs": "Three attackers move through designated lanes before transitioning to defense.",
+    "coach_script": "'Retrieve with purpose. Scan before you touch the puck. Make the first play that gives your team possession.'",
+    "coaching_cues": [
+      "Attack with speed",
+      "Support underneath",
+      "Move without puck"
+    ],
+    "guided_questions": [
+      "Before: Where is the pressure coming from?",
+      "During: What information did you gather before touching the puck?",
+      "After: What made your first play successful?"
+    ],
+    "observation_checklist": [
+      "□ Shoulder check before retrieval",
+      "□ Efficient skating route",
+      "□ Early communication",
+      "□ Strong first play",
+      "□ Support away from puck",
+      "□ Immediate transition"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Players collapse together → Mark lanes visually."
+    ],
+    "constraints_progressions": [
+      "Immediate backcheck",
+      "Cross-ice pass required",
+      "Passive defender"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Effective transition teams retrieve pucks, scan early, communicate, and make quality first plays. These drills connect retrievals directly to game decisions.",
+    "search_tags": [
+      "Develop speed and support through transition.",
+      "Retrievals & Transition",
+      "Transition with lane support"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "RT-024",
+    "version": "1.0",
+    "name": "Continuous Transition Wave",
+    "review_status": "Needs Review",
+    "family": "Retrievals & Transition",
+    "primary_game_problem": "Change roles continuously after possession changes",
+    "secondary_game_problems": null,
+    "target_behaviors": "Improve continuous transition habits.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Team Concepts",
+    "energy": "High",
+    "complexity": "Medium-High",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "3v2 attack becomes immediate transition in opposite direction with new players joining.",
+    "how_it_runs": "3v2 attack becomes immediate transition in opposite direction with new players joining.",
+    "coach_script": "'Retrieve with purpose. Scan before you touch the puck. Make the first play that gives your team possession.'",
+    "coaching_cues": [
+      "Recover immediately",
+      "Communicate",
+      "Match speed through transition"
+    ],
+    "guided_questions": [
+      "Before: Where is the pressure coming from?",
+      "During: What information did you gather before touching the puck?",
+      "After: What made your first play successful?"
+    ],
+    "observation_checklist": [
+      "□ Shoulder check before retrieval",
+      "□ Efficient skating route",
+      "□ Early communication",
+      "□ Strong first play",
+      "□ Support away from puck",
+      "□ Immediate transition"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Slow line changes → Reduce group size.",
+      "Late recovery → Reward defensive effort."
+    ],
+    "constraints_progressions": [
+      "Add backchecker",
+      "Limit puck possession",
+      "Continuous clock"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Effective transition teams retrieve pucks, scan early, communicate, and make quality first plays. These drills connect retrievals directly to game decisions.",
+    "search_tags": [
+      "Change roles continuously after possession changes",
+      "Improve continuous transition habits.",
+      "Retrievals & Transition"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  },
+  {
+    "drill_id": "RT-025",
+    "version": "1.0",
+    "name": "Quick-Up Decision Game",
+    "review_status": "Needs Review",
+    "family": "Retrievals & Transition",
+    "primary_game_problem": "Make the first transition decision quickly",
+    "secondary_game_problems": null,
+    "target_behaviors": "Make fast, effective first plays after turnovers.",
+    "technical_skills": null,
+    "tactical_concepts": null,
+    "four_roles": "Varies by drill",
+    "practice_theme": null,
+    "best_ages": null,
+    "level": "All developmental levels",
+    "min_players": null,
+    "ideal_players": null,
+    "max_players": null,
+    "goalies": "0-2",
+    "coaches": "1+",
+    "ice_footprint": "Quarter ice",
+    "time_min": null,
+    "practice_phase": "Team Concepts",
+    "energy": "High",
+    "complexity": "Medium-High",
+    "equipment": "Pucks; nets/mini-nets or tires as applicable",
+    "setup_summary": "Small-area game where bonus points are awarded for completing a first pass within three seconds of gaining possession.",
+    "how_it_runs": "Small-area game where bonus points are awarded for completing a first pass within three seconds of gaining possession.",
+    "coach_script": "'Retrieve with purpose. Scan before you touch the puck. Make the first play that gives your team possession.'",
+    "coaching_cues": [
+      "Scan before possession",
+      "Support quickly",
+      "Attack when advantage exists"
+    ],
+    "guided_questions": [
+      "Before: Where is the pressure coming from?",
+      "During: What information did you gather before touching the puck?",
+      "After: What made your first play successful?"
+    ],
+    "observation_checklist": [
+      "□ Shoulder check before retrieval",
+      "□ Efficient skating route",
+      "□ Early communication",
+      "□ Strong first play",
+      "□ Support away from puck",
+      "□ Immediate transition"
+    ],
+    "success_indicators": [
+      "Players demonstrate the primary objective under pressure with less coach direction."
+    ],
+    "failure_indicators": [
+      "Players panic → Increase decision time initially.",
+      "Blind passes → Pause and discuss scanning before possession."
+    ],
+    "constraints_progressions": [
+      "Two-second rule",
+      "Every player touches puck",
+      "Immediate counterattack"
+    ],
+    "regressions": [
+      "Increase space; reduce pressure; add support option; simplify scoring rule."
+    ],
+    "goalie_objective": "Define goalie objective when a goalie is used.",
+    "safety_traffic_notes": "TBD — verify safety, traffic flow, waiting areas, and workload for the actual context.",
+    "why_it_works": "Effective transition teams retrieve pucks, scan early, communicate, and make quality first plays. These drills connect retrievals directly to game decisions.",
+    "search_tags": [
+      "Make fast",
+      "effective first plays after turnovers.",
+      "Make the first transition decision quickly",
+      "Retrievals & Transition"
+    ],
+    "source": "Carolina EDGE Master Drill Library v2.0",
+    "source_version": "2.0",
+    "content_state": "Legacy Candidate",
+    "visibility": "Carolina EDGE Internal",
+    "origin_type": "Legacy Library",
+    "canonical_record": "Yes",
+    "game_problem_id": null,
+    "primary_behavior_id": null,
+    "default_participation_notes": null,
+    "decision_cue_summary": "Evaluate in practice context",
+    "decision_options_summary": null,
+    "game_like_evidence": null,
+    "age_context_notes": "Context dependent",
+    "api_ready": "No"
+  }
+]

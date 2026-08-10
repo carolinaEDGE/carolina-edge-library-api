@@ -1,0 +1,177 @@
+openapi: 3.1.0
+info:
+  title: Carolina EDGE Library API
+  version: 0.1.0
+  description: Search Carolina EDGE drills, evaluate EDGE 5 Elements in context, and save user-created drills/practices.
+servers:
+  - url: https://REPLACE-WITH-YOUR-RENDER-SERVICE.onrender.com
+paths:
+  /health:
+    get:
+      operationId: libraryHealth
+      summary: Check API health and library version.
+      responses:
+        '200': {description: OK}
+  /v1/drills:
+    get:
+      operationId: searchEdgeDrills
+      summary: Search Carolina EDGE drills by game problem or context.
+      parameters:
+        - {name: q, in: query, schema: {type: string}}
+        - {name: game_problem, in: query, schema: {type: string}}
+        - {name: family, in: query, schema: {type: string}}
+        - {name: age, in: query, schema: {type: string}}
+        - {name: ice, in: query, schema: {type: string}}
+        - {name: goalies, in: query, schema: {type: integer}}
+        - {name: limit, in: query, schema: {type: integer, default: 10, maximum: 50}}
+      responses:
+        '200': {description: Drill search results}
+  /v1/drills/{drill_id}:
+    get:
+      operationId: getEdgeDrill
+      summary: Get a Carolina EDGE drill by stable ID.
+      parameters:
+        - name: drill_id
+          in: path
+          required: true
+          schema: {type: string}
+      responses:
+        '200': {description: Drill}
+  /v1/evaluations:
+    post:
+      operationId: evaluateEdge5Elements
+      summary: Evaluate the EDGE 5 Elements for a drill in the coach's actual context. Low scores never block use.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [total_players, active_players, fun_challenging, age_appropriate, game_like_context, decisions]
+              properties:
+                drill_id: {type: string}
+                age: {type: string}
+                level: {type: string}
+                total_players: {type: integer, minimum: 1}
+                active_players: {type: integer, minimum: 0}
+                ice_space: {type: string}
+                goalies: {type: integer, minimum: 0}
+                fun_challenging: {type: boolean}
+                age_appropriate: {type: boolean}
+                game_like_context: {type: boolean}
+                decisions: {type: boolean}
+                decision_cues: {type: string}
+                decision_options: {type: string}
+                coach_awareness: {type: string}
+                recommended_adjustment: {type: string}
+                context_notes: {type: string}
+      responses:
+        '200': {description: EDGE 5 Elements result}
+  /v1/user-drills:
+    post:
+      operationId: saveUserDrill
+      summary: Save a user-created or adapted drill privately to My Library.
+      security: [{ApiKeyAuth: []}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [owner_key, title]
+              properties:
+                owner_key: {type: string}
+                title: {type: string}
+                based_on_drill_id: {type: string}
+                game_problem: {type: string}
+                objective: {type: string}
+                age: {type: string}
+                level: {type: string}
+                players: {type: integer}
+                goalies: {type: integer}
+                ice: {type: string}
+                duration: {type: integer}
+                setup: {type: string}
+                how_it_runs: {type: string}
+                constraints: {type: string}
+                coaching_cues: {type: string}
+                goalie_focus: {type: string}
+                safety_notes: {type: string}
+                decision_cues: {type: string}
+                decision_options: {type: string}
+                edge_evaluation_id: {type: string}
+                user_notes: {type: string}
+      responses:
+        '200': {description: Saved drill}
+  /v1/user-practices:
+    post:
+      operationId: saveUserPractice
+      summary: Save a complete user-created practice privately to My Library.
+      security: [{ApiKeyAuth: []}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [owner_key, title]
+              properties:
+                owner_key: {type: string}
+                title: {type: string}
+                primary_game_problem: {type: string}
+                age: {type: string}
+                level: {type: string}
+                players: {type: integer}
+                goalies: {type: integer}
+                coaches: {type: integer}
+                ice: {type: string}
+                total_minutes: {type: integer}
+                objective: {type: string}
+                edge_notes: {type: string}
+                user_notes: {type: string}
+                segments:
+                  type: array
+                  items:
+                    type: object
+                    required: [segment_number]
+                    properties:
+                      segment_number: {type: integer}
+                      start_minute: {type: integer}
+                      duration: {type: integer}
+                      activity_source: {type: string}
+                      activity_id: {type: string}
+                      activity_name: {type: string}
+                      purpose: {type: string}
+                      players_active: {type: integer}
+                      players_total: {type: integer}
+                      goalie_role: {type: string}
+                      setup_notes: {type: string}
+                      segment_notes: {type: string}
+      responses:
+        '200': {description: Saved practice}
+  /v1/contributions:
+    post:
+      operationId: submitContentToEdge
+      summary: Explicitly submit a saved drill or practice to the Carolina EDGE review queue. Creates a review snapshot.
+      security: [{ApiKeyAuth: []}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [owner_key, content_type, user_content_id, contribution_consent]
+              properties:
+                owner_key: {type: string}
+                content_type: {type: string, enum: [drill, practice]}
+                user_content_id: {type: string}
+                contribution_consent: {type: boolean}
+                notes: {type: string}
+      responses:
+        '200': {description: Contribution queued}
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
