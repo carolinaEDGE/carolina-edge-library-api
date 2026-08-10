@@ -126,7 +126,70 @@ def save_user_practice(payload:UserPracticeCreate,db:Session=Depends(get_db)):
             players_total=s.players_total,repetitions_met=rep,goalie_role=s.goalie_role,setup_notes=s.setup_notes,segment_notes=s.segment_notes))
     db.commit()
     return {'user_practice_id':uid,'library_state':'My Library','segments_saved':len(payload.segments),'contribution_consent':False}
+@app.get('/v1/user-practices', dependencies=[Depends(require_write_key)])
+def list_user_practices(
+    owner_key: str,
+    db: Session = Depends(get_db)
+):
+    practices = (
+        db.query(UserPractice)
+        .filter(UserPractice.owner_key == owner_key)
+        .order_by(UserPractice.updated_at.desc())
+        .all()
+    )
 
+    items = []
+
+    for practice in practices:
+        segments = (
+            db.query(PracticeSegment)
+            .filter(
+                PracticeSegment.user_practice_id
+                == practice.user_practice_id
+            )
+            .order_by(PracticeSegment.segment_number)
+            .all()
+        )
+
+        items.append({
+            'user_practice_id': practice.user_practice_id,
+            'title': practice.title,
+            'primary_game_problem': practice.primary_game_problem,
+            'age': practice.age,
+            'level': practice.level,
+            'players': practice.players,
+            'goalies': practice.goalies,
+            'coaches': practice.coaches,
+            'ice': practice.ice,
+            'total_minutes': practice.total_minutes,
+            'objective': practice.objective,
+            'edge_notes': practice.edge_notes,
+            'user_notes': practice.user_notes,
+            'library_state': practice.library_state,
+            'segments': [
+                {
+                    'segment_number': s.segment_number,
+                    'start_minute': s.start_minute,
+                    'duration': s.duration,
+                    'activity_source': s.activity_source,
+                    'activity_id': s.activity_id,
+                    'activity_name': s.activity_name,
+                    'purpose': s.purpose,
+                    'players_active': s.players_active,
+                    'players_total': s.players_total,
+                    'repetitions_met': s.repetitions_met,
+                    'goalie_role': s.goalie_role,
+                    'setup_notes': s.setup_notes,
+                    'segment_notes': s.segment_notes
+                }
+                for s in segments
+            ]
+        })
+
+    return {
+        'count': len(items),
+        'items': items
+    }
 @app.post('/v1/contributions',dependencies=[Depends(require_write_key)])
 def submit_contribution(payload:ContributionCreate,db:Session=Depends(get_db)):
     if not payload.contribution_consent:
