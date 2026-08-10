@@ -140,4 +140,4 @@ class PracticeReviewCreate(BaseModel):
 
     next_focus: str | None = None
 
-   activities: list[PracticeActivityReviewCreate] = Field(default_factory=list)
+    activities: list[PracticeActivityReviewCreate] = Field(default_factory=list)
