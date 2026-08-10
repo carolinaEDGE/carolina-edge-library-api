@@ -78,3 +78,66 @@ class ContributionCreate(BaseModel):
     user_content_id: str
     contribution_consent: bool
     notes: Optional[str] = None
+class DevelopmentGoalCreate(BaseModel):
+    owner_key: str
+    title: str
+    description: str | None = None
+
+
+class PracticeActivityReviewCreate(BaseModel):
+    segment_number: int | None = None
+
+    activity_source: str | None = None
+    activity_id: str | None = None
+    activity_name: str
+
+    intended_goal: str | None = None
+
+    # Simple coach-facing result:
+    # Yes / Partly / No
+    goal_delivery: str | None = None
+
+    # EDGE selects only the 1-2 elements most relevant
+    # to why this activity was chosen.
+    focus_element_1: str | None = None
+    focus_element_1_result: str | None = None
+
+    focus_element_2: str | None = None
+    focus_element_2_result: str | None = None
+
+    # Coach can answer conversationally.
+    coach_observation: str | None = None
+
+    # What EDGE recommends changing or preserving next time.
+    adjustment_next_time: str | None = None
+
+    # As-is / With changes / No
+    would_use_again: str | None = None
+
+
+class PracticeReviewCreate(BaseModel):
+    owner_key: str
+
+    # Link to a saved My Library practice when available.
+    user_practice_id: str | None = None
+
+    # Links multiple practices and future game check-ins
+    # to the same development theme.
+    development_goal_id: str | None = None
+
+    practice_goal: str | None = None
+
+    # Great / Good / Mixed / Tough
+    # or similar natural summary.
+    overall_result: str | None = None
+
+    what_worked: str | None = None
+    what_didnt: str | None = None
+    overall_observation: str | None = None
+
+    # Revisit / Regress / Progress / Connect / Move On
+    next_practice_decision: str | None = None
+
+    next_focus: str | None = None
+
+   activities: list[PracticeActivityReviewCreate] = Field(default_factory=list)
