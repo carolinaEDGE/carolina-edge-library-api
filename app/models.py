@@ -303,3 +303,66 @@ class PracticeActivityReview(Base):
         Text,
         nullable=True
     )
+class GameCheckIn(Base):
+    __tablename__ = "game_check_ins"
+
+    check_in_id: Mapped[str] = mapped_column(
+        String(60),
+        primary_key=True
+    )
+
+    owner_key: Mapped[str] = mapped_column(
+        String(120),
+        index=True
+    )
+
+    development_goal_id: Mapped[str] = mapped_column(
+        String(60),
+        ForeignKey("development_goals.goal_id"),
+        index=True
+    )
+
+    game_label: Mapped[str | None] = mapped_column(
+        String(200),
+        nullable=True
+    )
+
+    game_date: Mapped[str | None] = mapped_column(
+        String(40),
+        nullable=True
+    )
+
+    transfer_result: Mapped[str | None] = mapped_column(
+        String(40),
+        nullable=True
+    )
+
+    what_showed_up: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True
+    )
+
+    what_still_breaks_down: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True
+    )
+
+    coach_observation: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True
+    )
+
+    next_implication: Mapped[str | None] = mapped_column(
+        Text,
+        nullable=True
+    )
+
+    next_practice_decision: Mapped[str | None] = mapped_column(
+        String(60),
+        nullable=True
+    )
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime,
+        default=datetime.utcnow
+    )
