@@ -141,3 +141,24 @@ class PracticeReviewCreate(BaseModel):
     next_focus: str | None = None
 
     activities: list[PracticeActivityReviewCreate] = Field(default_factory=list)
+
+
+class GameCheckInCreate(BaseModel):
+    owner_key: str
+    development_goal_id: str
+
+    game_label: str | None = None
+    game_date: str | None = None
+
+    # Clear / Emerging / Not Yet / Hard to Tell
+    transfer_result: str | None = None
+
+    what_showed_up: str | None = None
+    what_still_breaks_down: str | None = None
+    coach_observation: str | None = None
+
+    # What this game evidence means for the next practice.
+    next_implication: str | None = None
+
+    # Revisit / Regress / Progress / Connect / Move On
+    next_practice_decision: str | None = None
