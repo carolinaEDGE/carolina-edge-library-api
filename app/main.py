@@ -28,6 +28,7 @@ VERSION="0.1.0"
 app=FastAPI(title="Carolina EDGE Library API", version=VERSION, description="Drill and practice library service for Carolina EDGE. EDGE 5 Elements is informative, never a creation/use gate.")
 
 Base.metadata.create_all(bind=engine)
+
 with engine.begin() as conn:
     conn.exec_driver_sql(
         """
@@ -37,7 +38,9 @@ with engine.begin() as conn:
         ALTER COLUMN focus_element_2_result TYPE TEXT,
         ALTER COLUMN would_use_again TYPE TEXT
         """
-    )with next(get_db()) as db:
+    )
+
+with next(get_db()) as db:
     seed_drills(db)
 
 def require_write_key(x_api_key: str|None = Header(default=None)):
