@@ -641,3 +641,171 @@ def list_game_check_ins(
             for r in rows
         ]
     }
+
+@app.get(
+    '/v1/development-progress',
+    dependencies=[Depends(require_write_key)]
+)
+def get_development_progress(
+    owner_key: str,
+    development_goal_id: str,
+    db: Session = Depends(get_db)
+):
+    goal = db.get(DevelopmentGoal, development_goal_id)
+
+    if not goal or goal.owner_key != owner_key:
+        raise HTTPException(
+            404,
+            'Development goal not found'
+        )
+
+    practice_reviews = (
+        db.query(PracticeReview)
+        .filter(
+            PracticeReview.owner_key == owner_key,
+            PracticeReview.development_goal_id == development_goal_id
+        )
+        .order_by(PracticeReview.created_at.asc())
+        .all()
+    )
+
+    game_check_ins = (
+        db.query(GameCheckIn)
+        .filter(
+            GameCheckIn.owner_key == owner_key,
+            GameCheckIn.development_goal_id == development_goal_id
+        )
+        .order_by(GameCheckIn.created_at.asc())
+        .all()
+    )
+
+    practice_items = []
+
+    for review in practice_reviews:
+        activities = (
+            db.query(PracticeActivityReview)
+            .filter(
+                PracticeActivityReview.review_id == review.review_id
+            )
+           .order_by(PracticeActivityReview.segment_number.asc())
+            .all()
+        )
+
+        practice_items.append({
+            'review_id': review.review_id,
+            'user_practice_id': review.user_practice_id,
+            'practice_goal': review.practice_goal,
+            'overall_result': review.overall_result,
+            'what_worked': review.what_worked,
+            'what_didnt': review.what_didnt,
+            'overall_observation': review.overall_observation,
+            'next_practice_decision': review.next_practice_decision,
+            'next_focus': review.next_focus,
+            'created_at': (
+                review.created_at.isoformat()
+                if review.created_at is not None
+                else None
+            ),
+            'activities': [
+                {
+                    'segment_number': a.segment_number,
+                    'activity_source': a.activity_source,
+                    'activity_id': a.activity_id,
+                    'activity_name': a.activity_name,
+                    'intended_goal': a.intended_goal,
+                    'goal_delivery': a.goal_delivery,
+                    'focus_element_1': a.focus_element_1,
+                    'focus_element_1_result': (
+                        a.focus_element_1_result
+                    ),
+                    'focus_element_2': a.focus_element_2,
+                    'focus_element_2_result': (
+                        a.focus_element_2_result
+                    ),
+                    'coach_observation': a.coach_observation,
+                    'adjustment_next_time': (
+                        a.adjustment_next_time
+                    ),
+                    'would_use_again': a.would_use_again
+                }
+                for a in activities
+            ]
+        })
+
+    game_items = [
+        {
+            'check_in_id': r.check_in_id,
+            'game_label': r.game_label,
+            'game_date': r.game_date,
+            'transfer_result': r.transfer_result,
+            'what_showed_up': r.what_showed_up,
+            'what_still_breaks_down': (
+                r.what_still_breaks_down
+            ),
+            'coach_observation': r.coach_observation,
+            'next_implication': r.next_implication,
+            'next_practice_decision': (
+                r.next_practice_decision
+            ),
+            'created_at': (
+                r.created_at.isoformat()
+                if r.created_at is not None
+                else None
+            )
+        }
+        for r in game_check_ins
+    ]
+
+    timeline = []
+
+    for review in practice_items:
+        timeline.append({
+            'evidence_type': 'practice_review',
+            'evidence_id': review['review_id'],
+            'created_at': review['created_at'],
+            'result': review['overall_result'],
+            'observation': review['overall_observation'],
+            'next_decision': (
+                review['next_practice_decision']
+            )
+        })
+
+    for check_in in game_items:
+        timeline.append({
+            'evidence_type': 'game_check_in',
+            'evidence_id': check_in['check_in_id'],
+            'created_at': check_in['created_at'],
+            'result': check_in['transfer_result'],
+            'observation': check_in['coach_observation'],
+            'next_decision': (
+                check_in['next_practice_decision']
+            )
+        })
+
+    timeline.sort(
+        key=lambda item: item['created_at'] or ''
+    )
+
+    return {
+        'development_goal': {
+            'goal_id': goal.goal_id,
+            'title': goal.title,
+            'description': goal.description,
+            'status': goal.status,
+            'created_at': (
+                goal.created_at.isoformat()
+                if goal.created_at is not None
+                else None
+            ),
+            'updated_at': (
+                goal.updated_at.isoformat()
+                if goal.updated_at is not None
+                else None
+            )
+        },
+        'practice_review_count': len(practice_items),
+        'game_check_in_count': len(game_items),
+        'practice_reviews': practice_items,
+        'game_check_ins': game_items,
+        'evidence_timeline': timeline
+    }
