@@ -564,3 +564,39 @@ def test_practice_blueprint_rejects_non_60_minute_template_for_now():
     })
     assert r.status_code == 400
     assert "60-minute template" in r.json()["detail"]
+
+
+def test_station_recommendations_never_require_more_active_players_than_group_size():
+    r = client.get("/v1/practice-station-recommendations", params={
+        "total_players":16,
+        "stations":4,
+        "goalies":2,
+        "game_problem":"puck support",
+        "readiness_age":"12U",
+        "ice":"half ice"
+    })
+    assert r.status_code == 200
+    j = r.json()
+    assert j["group_sizes"] == [4,4,4,4]
+    for item in j["items"]:
+        if not item.get("drill"):
+            continue
+        group_size = item["group_size"]
+        required = item["drill"].get("source_active_players_min")
+        assert required is None or required <= group_size, (item["drill"]["drill_id"], required, group_size)
+
+def test_practice_blueprint_station_choices_respect_source_active_player_minimums():
+    r = client.get("/v1/practice-blueprint", params={
+        "total_players":16,
+        "goalies":2,
+        "game_problem":"puck support",
+        "readiness_age":"12U",
+        "ice":"half ice"
+    })
+    assert r.status_code == 200
+    j = r.json()
+    for item in j["schedule"][1]["stations"]:
+        if not item.get("drill"):
+            continue
+        required = item["drill"].get("source_active_players_min")
+        assert required is None or required <= item["group_size"]
