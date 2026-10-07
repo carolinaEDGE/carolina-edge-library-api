@@ -34,23 +34,24 @@ app=FastAPI(title="Carolina EDGE Library API", version=VERSION, description="Dri
 Base.metadata.create_all(bind=engine)
 migrate_v02(engine)
 
-with engine.begin() as conn:
-    conn.exec_driver_sql(
-        """
-        ALTER TABLE practice_activity_reviews
-        ALTER COLUMN goal_delivery TYPE TEXT,
-        ALTER COLUMN focus_element_1_result TYPE TEXT,
-        ALTER COLUMN focus_element_2_result TYPE TEXT,
-        ALTER COLUMN would_use_again TYPE TEXT
-        """
-    )
+if engine.dialect.name == "postgresql":
+    with engine.begin() as conn:
+        conn.exec_driver_sql(
+            """
+            ALTER TABLE practice_activity_reviews
+            ALTER COLUMN goal_delivery TYPE TEXT,
+            ALTER COLUMN focus_element_1_result TYPE TEXT,
+            ALTER COLUMN focus_element_2_result TYPE TEXT,
+            ALTER COLUMN would_use_again TYPE TEXT
+            """
+        )
 
-    conn.exec_driver_sql(
-        """
-        ALTER TABLE game_check_ins
-        ALTER COLUMN next_practice_decision TYPE TEXT
-        """
-    )
+        conn.exec_driver_sql(
+            """
+            ALTER TABLE game_check_ins
+            ALTER COLUMN next_practice_decision TYPE TEXT
+            """
+        )
 
 with next(get_db()) as db:
     seed_drills(db)
