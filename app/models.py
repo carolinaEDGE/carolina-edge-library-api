@@ -42,6 +42,8 @@ class Drill(Base):
     coach_notes: Mapped[str|None] = mapped_column(Text, nullable=True)
     adaptation_text: Mapped[str|None] = mapped_column(Text, nullable=True)
     schema_version: Mapped[str|None] = mapped_column(String(60), nullable=True)
+    edge_age_readiness_json: Mapped[str|None] = mapped_column(Text, nullable=True)
+    edge_readiness_basis: Mapped[str|None] = mapped_column(String(50), nullable=True)
     is_searchable: Mapped[bool] = mapped_column(Boolean, default=False, index=True)
     active: Mapped[bool] = mapped_column(Boolean, default=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)

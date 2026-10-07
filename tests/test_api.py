@@ -334,3 +334,44 @@ def test_backcheck_and_goalie_gap_fill_set():
     with SessionLocal() as db:
         assert db.get(Drill, "EDGE-A1110").best_ages == "U15"
         assert db.get(Drill, "EDGE-A1129").best_ages == "ALL AGES"
+
+
+def test_all_searchable_records_have_separate_edge_readiness():
+    from app.db import SessionLocal
+    from app.models import Drill
+    import json
+    allowed = {"PRIORITIZE NOW","INTRODUCE","CONTINUE DEVELOPING","DO NOT RUSH"}
+    with SessionLocal() as db:
+        rows = db.query(Drill).filter(Drill.active.is_(True), Drill.is_searchable.is_(True)).all()
+        assert len(rows) == 39
+        for row in rows:
+            assert row.edge_readiness_basis == "CAROLINA_EDGE_EDITORIAL_V1"
+            data = json.loads(row.edge_age_readiness_json or "{}")
+            assert set(data) == {"8U","10U","12U","14U","16U-18U"}
+            assert set(data.values()) <= allowed
+            assert row.age_context_notes
+        assert db.get(Drill, "EDGE-A1110").best_ages == "U15"
+        assert db.get(Drill, "EDGE-A1129").best_ages == "ALL AGES"
+        assert db.get(Drill, "EDGE-A1620").best_ages is None
+
+def test_readiness_filter_supports_practice_edge_without_rewriting_source_age():
+    r = client.get("/v1/drills", params={"readiness_age":"8U","limit":50})
+    assert r.status_code == 200
+    ids = {x["drill_id"] for x in r.json()["items"]}
+    assert "EDGE-A291" in ids
+    assert "EDGE-A1427" not in ids
+    assert "EDGE-A1594" not in ids
+
+    r = client.get("/v1/drills", params={"readiness_age":"12U","readiness":"PRIORITIZE NOW","limit":50})
+    assert r.status_code == 200
+    ids = {x["drill_id"] for x in r.json()["items"]}
+    assert "EDGE-A1198" in ids
+    assert "EDGE-A1364" in ids
+    assert "EDGE-A1110" not in ids
+
+    r = client.get("/v1/drills/EDGE-A1110")
+    assert r.status_code == 200
+    j = r.json()
+    assert j["best_ages"] == "U15"
+    assert j["edge_readiness_basis"] == "CAROLINA_EDGE_EDITORIAL_V1"
+    assert j["edge_age_readiness"]["14U"] == "PRIORITIZE NOW"
