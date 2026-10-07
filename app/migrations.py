@@ -15,6 +15,8 @@ V02_COLUMNS = {
     "coach_notes": "TEXT",
     "adaptation_text": "TEXT",
     "schema_version": "VARCHAR(60)",
+    "edge_age_readiness_json": "TEXT",
+    "edge_readiness_basis": "VARCHAR(50)",
     "is_searchable": "BOOLEAN NOT NULL DEFAULT FALSE",
 }
 
