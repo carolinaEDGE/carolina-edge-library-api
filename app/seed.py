@@ -11,6 +11,7 @@ EDGE_GAP_FILL_SEED_V2 = Path(__file__).resolve().parents[1] / "data" / "edge_gap
 EDGE_GAP_FILL_SEED_V3 = Path(__file__).resolve().parents[1] / "data" / "edge_gap_fill_verified_v3.jsonl"
 EDGE_GAP_FILL_SEED_V4 = Path(__file__).resolve().parents[1] / "data" / "edge_gap_fill_verified_v4.jsonl"
 EDGE_AGE_READINESS = Path(__file__).resolve().parents[1] / "data" / "edge_age_readiness_v1.jsonl"
+EDGE_CAPACITY = Path(__file__).resolve().parents[1] / "data" / "edge_capacity_v1.jsonl"
 
 def _legacy_rows():
     return json.loads(LEGACY_SEED.read_text(encoding="utf-8"))
@@ -36,6 +37,9 @@ def _edge_rows():
 
 def _readiness_rows():
     return _jsonl_rows(EDGE_AGE_READINESS)
+
+def _capacity_rows():
+    return _jsonl_rows(EDGE_CAPACITY)
 
 def _normalize_goalies(value):
     text = (value or "").strip().upper()
@@ -133,6 +137,18 @@ def seed_drills(db: Session):
         rec.edge_age_readiness_json = json.dumps(g.get("readiness") or {})
         rec.edge_readiness_basis = g.get("basis")
         rec.age_context_notes = g.get("note")
+
+    for g in _capacity_rows():
+        rec = db.get(Drill, g["edge_id"])
+        if rec is None:
+            continue
+        rec.source_active_players_min = g.get("source_active_players_min")
+        rec.source_active_players_max = g.get("source_active_players_max")
+        rec.edge_station_group_min = g.get("edge_station_group_min")
+        rec.edge_station_group_max = g.get("edge_station_group_max")
+        rec.simultaneous_goalies = g.get("simultaneous_goalies")
+        rec.capacity_basis = g.get("capacity_basis")
+        rec.capacity_notes = g.get("capacity_notes")
 
     db.commit()
     return created
