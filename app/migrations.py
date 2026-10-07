@@ -17,6 +17,13 @@ V02_COLUMNS = {
     "schema_version": "VARCHAR(60)",
     "edge_age_readiness_json": "TEXT",
     "edge_readiness_basis": "VARCHAR(50)",
+    "source_active_players_min": "INTEGER",
+    "source_active_players_max": "INTEGER",
+    "edge_station_group_min": "INTEGER",
+    "edge_station_group_max": "INTEGER",
+    "simultaneous_goalies": "INTEGER",
+    "capacity_basis": "VARCHAR(60)",
+    "capacity_notes": "TEXT",
     "is_searchable": "BOOLEAN NOT NULL DEFAULT FALSE",
 }
 
