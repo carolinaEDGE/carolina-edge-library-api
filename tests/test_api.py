@@ -115,3 +115,23 @@ def test_seed_values_fit_declared_string_columns():
             col = Drill.__table__.columns[name]
             if isinstance(col.type, String) and col.type.length:
                 assert len(str(value)) <= col.type.length, (name, value, col.type.length)
+
+
+def test_existing_legacy_rows_are_backfilled_to_hold():
+    from app.db import SessionLocal
+    from app.models import Drill
+    from app.seed import seed_drills
+
+    with SessionLocal() as db:
+        legacy = db.get(Drill, "IQ-001")
+        assert legacy is not None
+        legacy.publication_status = None
+        legacy.surface_policy = None
+        legacy.is_searchable = True
+        db.commit()
+
+        seed_drills(db)
+        db.refresh(legacy)
+        assert legacy.publication_status == "LEGACY_HOLD"
+        assert legacy.surface_policy == "REFERENCE_ONLY"
+        assert legacy.is_searchable is False
