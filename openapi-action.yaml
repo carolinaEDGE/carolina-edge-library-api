@@ -11,7 +11,20 @@ paths:
       operationId: libraryHealth
       summary: Check API health and library version.
       responses:
-        '200': {description: OK}
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [status, version, drills]
+                properties:
+                  status: {type: string}
+                  version: {type: string}
+                  drills: {type: integer}
+                  active_drills: {type: integer}
+                  inactive_drills: {type: integer}
+                additionalProperties: true
   /v1/drills:
     get:
       operationId: searchEdgeDrills
