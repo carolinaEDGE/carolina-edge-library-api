@@ -18,8 +18,8 @@ def test_health_and_seed():
     assert r.status_code==200
     j=r.json()
     assert j["version"]=="0.2.0-staging"
-    assert j["drills"]==53
-    assert j["active_drills"]==53
+    assert j["drills"]==57
+    assert j["active_drills"]==57
 
 def test_only_approved_publish_records_are_searchable():
     r=client.get("/v1/drills",params={"limit":50})
@@ -29,9 +29,10 @@ def test_only_approved_publish_records_are_searchable():
         "EDGE-A002","EDGE-A006","EDGE-A009","EDGE-A010","EDGE-A011","EDGE-A012",
         "EDGE-A014","EDGE-A106","EDGE-A107","EDGE-A108","EDGE-A109","EDGE-A110",
         "EDGE-A1700","EDGE-A196","EDGE-A197","EDGE-A198","EDGE-A218","EDGE-A219",
-        "EDGE-A220","EDGE-A291","EDGE-A292","EDGE-A293","EDGE-A294","EDGE-A295"
+        "EDGE-A220","EDGE-A291","EDGE-A292","EDGE-A293","EDGE-A294","EDGE-A295",
+        "EDGE-A1182","EDGE-A194","EDGE-A170","EDGE-A254"
     }
-    assert j["count"]==24
+    assert j["count"]==28
     assert {x["drill_id"] for x in j["items"]} == expected
     assert all(x["surface_policy"]=="PUBLISH_NOW" for x in j["items"])
     assert all(x["publication_status"]=="READY FOR IMPORT" for x in j["items"])
@@ -214,3 +215,31 @@ def test_retrieval_taxonomy_is_seeded_for_publish_records():
         assert "penalty kill" in (rows["EDGE-A219"].search_tags_json or "")
         assert rows["EDGE-A295"].family == "Puck Support / Offensive Zone"
         assert "seam" in (rows["EDGE-A295"].search_tags_json or "")
+
+
+def test_gap_fill_activities_are_source_verified_and_searchable():
+    expected = {
+        "EDGE-A1182":"Faceoff / Small-Area Game",
+        "EDGE-A194":"Net-Front / Rebound Game",
+        "EDGE-A170":"Possession / Support",
+        "EDGE-A254":"Net-Front / Point Support",
+    }
+    for drill_id, family in expected.items():
+        r = client.get(f"/v1/drills/{drill_id}")
+        assert r.status_code == 200
+        j = r.json()
+        assert j["publication_status"] == "READY FOR IMPORT"
+        assert j["surface_policy"] == "PUBLISH_NOW"
+        assert j["source_evidence"] == "VERIFIED SOURCE TEXT"
+
+    scenarios = [
+        ("faceoff", "EDGE-A1182"),
+        ("rebound", "EDGE-A194"),
+        ("outside support", "EDGE-A170"),
+        ("screen", "EDGE-A254"),
+    ]
+    for query, drill_id in scenarios:
+        r = client.get("/v1/drills", params={"q":query,"limit":50})
+        assert r.status_code == 200
+        ids = {x["drill_id"] for x in r.json()["items"]}
+        assert drill_id in ids, (query, ids)
