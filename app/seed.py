@@ -80,7 +80,9 @@ def seed_drills(db: Session):
         rec.version = "2.0"
         rec.name = d["title"]
         rec.review_status = "SOURCE VERIFIED"
+        rec.family = d.get("family")
         rec.primary_game_problem = d.get("game_problem")
+        rec.search_tags_json = json.dumps(d.get("search_tags") or [])
         rec.goalies = _normalize_goalies(d.get("goalie"))
         rec.ice_footprint = _ice_footprint(d.get("space_organization"))
         rec.setup_summary = d.get("space_organization")
