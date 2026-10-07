@@ -86,3 +86,32 @@ def test_no_reference_or_legacy_leakage_in_retrieval():
             assert item["drill_id"].startswith("EDGE-A")
             assert item["surface_policy"] == "PUBLISH_NOW"
             assert item["publication_status"] == "READY FOR IMPORT"
+
+
+def test_seed_values_fit_declared_string_columns():
+    from sqlalchemy import String
+    from app.models import Drill
+    from app.seed import _edge_rows, _normalize_goalies, _ice_footprint
+
+    for d in _edge_rows():
+        mapped = {
+            "drill_id": d["edge_id"],
+            "version": "2.0",
+            "name": d["title"],
+            "review_status": "SOURCE VERIFIED",
+            "primary_game_problem": d.get("game_problem"),
+            "goalies": _normalize_goalies(d.get("goalie")),
+            "ice_footprint": _ice_footprint(d.get("space_organization")),
+            "record_type": d.get("record_type"),
+            "route": d.get("route"),
+            "publication_status": d.get("publication_status"),
+            "surface_policy": d.get("surface_policy"),
+            "source_evidence": d.get("source_evidence"),
+            "schema_version": d.get("schema_version"),
+        }
+        for name, value in mapped.items():
+            if value is None:
+                continue
+            col = Drill.__table__.columns[name]
+            if isinstance(col.type, String) and col.type.length:
+                assert len(str(value)) <= col.type.length, (name, value, col.type.length)
