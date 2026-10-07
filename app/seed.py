@@ -9,6 +9,7 @@ EDGE_ADAPT_CANDIDATE_SEED = Path(__file__).resolve().parents[1] / "data" / "edge
 EDGE_GAP_FILL_SEED = Path(__file__).resolve().parents[1] / "data" / "edge_gap_fill_verified_v1.jsonl"
 EDGE_GAP_FILL_SEED_V2 = Path(__file__).resolve().parents[1] / "data" / "edge_gap_fill_verified_v2.jsonl"
 EDGE_GAP_FILL_SEED_V3 = Path(__file__).resolve().parents[1] / "data" / "edge_gap_fill_verified_v3.jsonl"
+EDGE_GAP_FILL_SEED_V4 = Path(__file__).resolve().parents[1] / "data" / "edge_gap_fill_verified_v4.jsonl"
 
 def _legacy_rows():
     return json.loads(LEGACY_SEED.read_text(encoding="utf-8"))
@@ -29,6 +30,7 @@ def _edge_rows():
         + _jsonl_rows(EDGE_GAP_FILL_SEED)
         + _jsonl_rows(EDGE_GAP_FILL_SEED_V2)
         + _jsonl_rows(EDGE_GAP_FILL_SEED_V3)
+        + _jsonl_rows(EDGE_GAP_FILL_SEED_V4)
     )
 
 def _normalize_goalies(value):
@@ -90,6 +92,7 @@ def seed_drills(db: Session):
         rec.name = d["title"]
         rec.review_status = "SOURCE VERIFIED"
         rec.family = d.get("family")
+        rec.best_ages = d.get("best_ages")
         rec.primary_game_problem = d.get("game_problem")
         rec.search_tags_json = json.dumps(d.get("search_tags") or [])
         rec.goalies = _normalize_goalies(d.get("goalie"))
