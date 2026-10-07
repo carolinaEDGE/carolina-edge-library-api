@@ -73,7 +73,9 @@ def drill_to_dict(d: Drill):
         'publication_status':d.publication_status,'surface_policy':d.surface_policy,'source_evidence':d.source_evidence,
         'source_text':d.source_text,'source_asset':d.source_asset,'source_boundary':d.source_boundary,
         'representative_information':d.representative_information,'player_decisions':d.player_decisions,
-        'space_organization':d.space_organization,'coach_notes':d.coach_notes,'schema_version':d.schema_version
+        'space_organization':d.space_organization,'coach_notes':d.coach_notes,'schema_version':d.schema_version,
+        'edge_age_readiness':json.loads(d.edge_age_readiness_json or '{}'),
+        'edge_readiness_basis':d.edge_readiness_basis
     }
 @app.get('/')
 def root():
@@ -98,6 +100,7 @@ def health(db: Session=Depends(get_db)):
 
 @app.get('/v1/drills')
 def search_drills(q: str|None=None, game_problem: str|None=None, family: str|None=None, age: str|None=None,
+                  readiness_age: str|None=None, readiness: str|None=None,
                   ice: str|None=None, goalies: int|None=None, limit: int=Query(10,ge=1,le=50), db:Session=Depends(get_db)):
     qry=db.query(Drill).filter(Drill.active.is_(True), Drill.is_searchable.is_(True))
     if q:
@@ -115,6 +118,12 @@ def search_drills(q: str|None=None, game_problem: str|None=None, family: str|Non
     if game_problem: qry=qry.filter(Drill.primary_game_problem.ilike(f"%{game_problem}%"))
     if family: qry=qry.filter(Drill.family.ilike(f"%{family}%"))
     if age: qry=qry.filter(or_(Drill.best_ages.is_(None), Drill.best_ages.ilike(f"%{age}%")))
+    if readiness_age:
+        qry=qry.filter(Drill.edge_age_readiness_json.ilike(f'%"{readiness_age}"%'))
+        if readiness:
+            qry=qry.filter(Drill.edge_age_readiness_json.ilike(f'%"{readiness_age}": "{readiness}"%'))
+        else:
+            qry=qry.filter(~Drill.edge_age_readiness_json.ilike(f'%"{readiness_age}": "DO NOT RUSH"%'))
     if ice: qry=qry.filter(Drill.ice_footprint.ilike(f"%{ice}%"))
     rows=qry.limit(limit).all()
     return {'count':len(rows),'items':[drill_to_dict(x) for x in rows], 'note':'EDGE 5 Elements should be evaluated in the coach\'s actual context; library search does not block lower-scoring drills.'}
