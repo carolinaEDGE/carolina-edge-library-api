@@ -351,6 +351,170 @@ def recommend_practice_stations(total_players: int=Query(...,ge=2,le=40),
         "note":"Capacity-compatible activity selection only; full Practice EDGE still controls sequencing, timing, progression, and coaching context."
     }
 
+@app.get('/v1/practice-blueprint')
+def build_practice_blueprint(total_players: int=Query(...,ge=6,le=40),
+                             goalies: int=Query(0,ge=0,le=8),
+                             total_minutes: int=Query(60,ge=45,le=90),
+                             game_problem: str|None=None,
+                             q: str|None=None,
+                             readiness_age: str|None=None,
+                             ice: str|None=None,
+                             db:Session=Depends(get_db)):
+    if total_minutes != 60:
+        raise HTTPException(400, 'EDGE_PRACTICE_BLUEPRINT_V1 currently supports the approved 60-minute template only.')
+
+    station_set = recommend_practice_stations(
+        total_players=total_players,
+        stations=4,
+        goalies=goalies,
+        q=q,
+        game_problem=game_problem,
+        readiness_age=readiness_age,
+        ice=ice,
+        db=db
+    )
+
+    groups = [chr(ord('A') + i) for i in range(4)]
+    station_periods = []
+    start = 5
+    for period in range(4):
+        assignments = []
+        for gi, group in enumerate(groups):
+            assignments.append({
+                "group":group,
+                "station":((gi + period) % 4) + 1
+            })
+        station_periods.append({
+            "period":period + 1,
+            "start_minute":start,
+            "duration":7,
+            "assignments":assignments
+        })
+        start += 7
+        if period < 3:
+            start += 1
+
+    used_ids = {
+        x["drill"]["drill_id"]
+        for x in station_set["items"]
+        if x.get("drill")
+    }
+
+    rows = db.query(Drill).filter(Drill.active.is_(True), Drill.is_searchable.is_(True)).all()
+    final_candidates = []
+    for d in rows:
+        if d.drill_id in used_ids:
+            continue
+        readiness = _readiness_value(d, readiness_age)
+        if readiness == "DO NOT RUSH":
+            continue
+        max_group = d.edge_station_group_max or 8
+        copies = max(1, (total_players + max_group - 1) // max_group)
+        per_copy = (total_players + copies - 1) // copies
+        score, reasons, readiness = _recommendation_score(
+            d, q, game_problem, None, readiness_age, ice, None, per_copy
+        )
+        if "game" in ((d.family or "") + " " + (d.name or "")).lower():
+            score += 18
+            reasons = reasons + ["game-format preference"]
+        goalie_need = (d.simultaneous_goalies or 0) * copies
+        if goalie_need <= goalies:
+            score += 8
+            reasons = reasons + ["goalie capacity supports concurrent game copies"]
+        elif goalie_need > 0:
+            score -= 16
+            reasons = reasons + ["insufficient goalies for all concurrent copies"]
+        final_candidates.append((score, d.drill_id, d, reasons, readiness, copies, per_copy, goalie_need))
+
+    final_candidates.sort(key=lambda x: (-x[0], x[1]))
+    final_game = None
+    if final_candidates:
+        score, _, d, reasons, readiness, copies, per_copy, goalie_need = final_candidates[0]
+        item = drill_to_dict(d)
+        item["recommendation_score"] = score
+        item["recommendation_reasons"] = reasons
+        item["requested_readiness"] = readiness
+        final_game = {
+            "duration":10,
+            "activity":item,
+            "concurrent_copies":copies,
+            "players_per_copy_target":per_copy,
+            "goalies_required_for_all_copies":goalie_need,
+            "goalie_adjustment":(
+                "Use tires/mini-nets for any copy without a goalie."
+                if goalie_need > goalies else
+                "Goalie allocation fits available goalies."
+            )
+        }
+
+    application_activity = None
+    ranked_station_drills = [
+        x["drill"] for x in station_set["items"]
+        if x.get("drill")
+    ]
+    if ranked_station_drills:
+        application_activity = ranked_station_drills[0]
+
+    return {
+        "blueprint_version":"EDGE_PRACTICE_BLUEPRINT_V1",
+        "template_basis":"CAROLINA_EDGE_EDITORIAL_60_MIN_V1",
+        "inputs":{
+            "total_players":total_players,
+            "goalies":goalies,
+            "total_minutes":total_minutes,
+            "game_problem":game_problem,
+            "query":q,
+            "readiness_age":readiness_age,
+            "ice":ice
+        },
+        "schedule":[
+            {
+                "phase":"Warm-up / activation",
+                "start_minute":0,
+                "duration":5,
+                "activity_source":"COACH_DESIGNED",
+                "guidance":"Use movement plus puck touches that prepare the primary game problem; avoid a scripted cone route unless it is serving a specific technical need."
+            },
+            {
+                "phase":"Station block",
+                "start_minute":5,
+                "duration":31,
+                "station_period_minutes":7,
+                "change_minutes":1,
+                "periods":station_periods,
+                "stations":station_set["items"]
+            },
+            {
+                "phase":"Application / progression block",
+                "start_minute":36,
+                "duration":12,
+                "activity":application_activity,
+                "guidance":"Re-use the strongest matching station activity with one meaningful constraint change that increases representative pressure, information, or transition without prescribing the solution."
+            },
+            {
+                "phase":"Final game",
+                "start_minute":48,
+                "duration":10,
+                "game":final_game
+            },
+            {
+                "phase":"Quick recap / reset",
+                "start_minute":58,
+                "duration":2,
+                "guidance":"One or two questions tied to the game problem; keep the recap brief."
+            }
+        ],
+        "quality_controls":{
+            "published_only":True,
+            "do_not_rush_excluded_when_age_supplied":True,
+            "source_and_edge_metadata_separated":True,
+            "station_capacity_scored":True,
+            "goalie_capacity_considered":True,
+            "unique_station_activities":True
+        },
+        "note":"This is a deterministic Practice EDGE blueprint. Diagram generation and finished practice-document rendering remain downstream steps."
+    }
+
 @app.get('/v1/drills/{drill_id}')
 def get_drill(drill_id:str, db:Session=Depends(get_db)):
     d=db.get(Drill,drill_id)
