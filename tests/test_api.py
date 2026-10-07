@@ -21,16 +21,20 @@ def test_health_and_seed():
     assert j["drills"]==53
     assert j["active_drills"]==53
 
-def test_only_verified_publish_seed_is_searchable():
+def test_only_approved_publish_records_are_searchable():
     r=client.get("/v1/drills",params={"limit":50})
     assert r.status_code==200
     j=r.json()
-    assert j["count"]==24
-    assert {x["drill_id"] for x in j["items"]} == {
+    expected = {
         "EDGE-A002","EDGE-A006","EDGE-A009","EDGE-A010","EDGE-A011","EDGE-A012",
-        "EDGE-A014","EDGE-A106","EDGE-A107","EDGE-A108","EDGE-A109","EDGE-A110"
+        "EDGE-A014","EDGE-A106","EDGE-A107","EDGE-A108","EDGE-A109","EDGE-A110",
+        "EDGE-A1700","EDGE-A196","EDGE-A197","EDGE-A198","EDGE-A218","EDGE-A219",
+        "EDGE-A220","EDGE-A291","EDGE-A292","EDGE-A293","EDGE-A294","EDGE-A295"
     }
+    assert j["count"]==24
+    assert {x["drill_id"] for x in j["items"]} == expected
     assert all(x["surface_policy"]=="PUBLISH_NOW" for x in j["items"])
+    assert all(x["publication_status"]=="READY FOR IMPORT" for x in j["items"])
 
 def test_legacy_drill_is_isolated():
     r=client.get("/v1/drills/IQ-001")
