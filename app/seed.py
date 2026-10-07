@@ -6,6 +6,7 @@ from .models import Drill
 LEGACY_SEED = Path(__file__).resolve().parents[1] / "data" / "drills.json"
 EDGE_PUBLISH_SEED = Path(__file__).resolve().parents[1] / "data" / "edge_seed_publish_v1.jsonl"
 EDGE_ADAPT_CANDIDATE_SEED = Path(__file__).resolve().parents[1] / "data" / "edge_manual_b_verified_candidates_v1.jsonl"
+EDGE_GAP_FILL_SEED = Path(__file__).resolve().parents[1] / "data" / "edge_gap_fill_verified_v1.jsonl"
 
 def _legacy_rows():
     return json.loads(LEGACY_SEED.read_text(encoding="utf-8"))
@@ -20,7 +21,11 @@ def _jsonl_rows(path: Path):
     ]
 
 def _edge_rows():
-    return _jsonl_rows(EDGE_PUBLISH_SEED) + _jsonl_rows(EDGE_ADAPT_CANDIDATE_SEED)
+    return (
+        _jsonl_rows(EDGE_PUBLISH_SEED)
+        + _jsonl_rows(EDGE_ADAPT_CANDIDATE_SEED)
+        + _jsonl_rows(EDGE_GAP_FILL_SEED)
+    )
 
 def _normalize_goalies(value):
     text = (value or "").strip().upper()
