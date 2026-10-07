@@ -18,8 +18,8 @@ def test_health_and_seed():
     assert r.status_code==200
     j=r.json()
     assert j["version"]=="0.2.0-staging"
-    assert j["drills"]==61
-    assert j["active_drills"]==61
+    assert j["drills"]==65
+    assert j["active_drills"]==65
 
 def test_only_approved_publish_records_are_searchable():
     r=client.get("/v1/drills",params={"limit":50})
@@ -31,9 +31,10 @@ def test_only_approved_publish_records_are_searchable():
         "EDGE-A1700","EDGE-A196","EDGE-A197","EDGE-A198","EDGE-A218","EDGE-A219",
         "EDGE-A220","EDGE-A291","EDGE-A292","EDGE-A293","EDGE-A294","EDGE-A295",
         "EDGE-A1182","EDGE-A194","EDGE-A170","EDGE-A254",
-        "EDGE-A190","EDGE-A544","EDGE-A1241","EDGE-A1364"
+        "EDGE-A190","EDGE-A544","EDGE-A1241","EDGE-A1364",
+        "EDGE-A1594","EDGE-A1339","EDGE-A1198","EDGE-A1427"
     }
-    assert j["count"]==32
+    assert j["count"]==36
     assert {x["drill_id"] for x in j["items"]} == expected
     assert all(x["surface_policy"]=="PUBLISH_NOW" for x in j["items"])
     assert all(x["publication_status"]=="READY FOR IMPORT" for x in j["items"])
@@ -266,6 +267,34 @@ def test_second_gap_fill_set_is_source_verified_and_searchable():
         ("forecheck", "EDGE-A544"),
         ("goalie", "EDGE-A1241"),
         ("regroup", "EDGE-A1364"),
+    ]
+    for query, drill_id in scenarios:
+        r = client.get("/v1/drills", params={"q":query,"limit":50})
+        assert r.status_code == 200
+        ids = {x["drill_id"] for x in r.json()["items"]}
+        assert drill_id in ids, (query, ids)
+
+
+def test_defensive_zone_and_forecheck_gap_fill_set():
+    expected = {
+        "EDGE-A1594":"Defensive Zone / Coverage",
+        "EDGE-A1339":"Defensive Zone / Net-Front Coverage",
+        "EDGE-A1198":"Forecheck / Breakout",
+        "EDGE-A1427":"Forecheck / Transition",
+    }
+    for drill_id, family in expected.items():
+        r = client.get(f"/v1/drills/{drill_id}")
+        assert r.status_code == 200
+        j = r.json()
+        assert j["publication_status"] == "READY FOR IMPORT"
+        assert j["surface_policy"] == "PUBLISH_NOW"
+        assert j["source_evidence"] == "VERIFIED SOURCE TEXT"
+
+    scenarios = [
+        ("defensive zone", "EDGE-A1594"),
+        ("coverage", "EDGE-A1339"),
+        ("forecheck", "EDGE-A1198"),
+        ("continuous", "EDGE-A1427"),
     ]
     for query, drill_id in scenarios:
         r = client.get("/v1/drills", params={"q":query,"limit":50})
