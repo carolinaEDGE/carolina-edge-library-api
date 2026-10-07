@@ -386,7 +386,7 @@ def test_recommendation_ranking_prefers_game_problem_and_age_readiness():
     })
     assert r.status_code == 200
     j = r.json()
-    assert j["ranking_version"] == "EDGE_RECOMMENDER_V1"
+    assert j["ranking_version"] == "EDGE_RECOMMENDER_V2"
     ids = [x["drill_id"] for x in j["items"]]
     assert ids
     assert "EDGE-A218" in ids or "EDGE-A170" in ids or "EDGE-A219" in ids
@@ -421,4 +421,62 @@ def test_recommendation_player_count_is_explicitly_not_scored_yet():
     assert r.status_code == 200
     j = r.json()
     assert j["players_requested"] == 8
-    assert "not yet scored" in j["note"]
+    assert "scored against Carolina EDGE editorial station-group ranges" in j["note"]
+
+
+def test_all_searchable_records_have_capacity_metadata():
+    from app.db import SessionLocal
+    from app.models import Drill
+    with SessionLocal() as db:
+        rows = db.query(Drill).filter(Drill.active.is_(True), Drill.is_searchable.is_(True)).all()
+        assert len(rows) == 39
+        for row in rows:
+            assert row.capacity_basis == "SOURCE_PLUS_EDGE_EDITORIAL_V1"
+            assert row.edge_station_group_min is not None
+            assert row.edge_station_group_max is not None
+            assert row.edge_station_group_min <= row.edge_station_group_max
+            assert row.simultaneous_goalies is not None
+            assert row.capacity_notes
+
+def test_capacity_metadata_preserves_source_vs_editorial_boundary():
+    r = client.get("/v1/drills/EDGE-A196")
+    assert r.status_code == 200
+    j = r.json()
+    assert j["source_active_players_min"] == 6
+    assert j["source_active_players_max"] == 6
+    assert j["edge_station_group_min"] == 6
+    assert j["edge_station_group_max"] == 8
+    assert j["capacity_basis"] == "SOURCE_PLUS_EDGE_EDITORIAL_V1"
+
+    r = client.get("/v1/drills/EDGE-A1110")
+    assert r.status_code == 200
+    j = r.json()
+    assert j["source_active_players_min"] == 4
+    assert j["source_active_players_max"] is None
+    assert j["edge_station_group_min"] == 8
+    assert j["edge_station_group_max"] == 12
+
+def test_recommendation_ranking_scores_station_group_size():
+    r = client.get("/v1/recommendations", params={
+        "q":"puck support",
+        "readiness_age":"10U",
+        "players":8,
+        "limit":10
+    })
+    assert r.status_code == 200
+    j = r.json()
+    assert j["ranking_version"] == "EDGE_RECOMMENDER_V2"
+    assert j["players_requested"] == 8
+    assert any("station group-size match" in x["recommendation_reasons"] for x in j["items"])
+
+def test_recommendation_ranking_uses_simultaneous_goalie_capacity():
+    r = client.get("/v1/recommendations", params={
+        "q":"transition",
+        "readiness_age":"12U",
+        "goalies":2,
+        "players":8,
+        "limit":10
+    })
+    assert r.status_code == 200
+    j = r.json()
+    assert any("simultaneous-goalie capacity match" in x["recommendation_reasons"] for x in j["items"])
