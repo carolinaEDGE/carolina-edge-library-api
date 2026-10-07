@@ -18,8 +18,8 @@ def test_health_and_seed():
     assert r.status_code==200
     j=r.json()
     assert j["version"]=="0.2.0-staging"
-    assert j["drills"]==37
-    assert j["active_drills"]==37
+    assert j["drills"]==53
+    assert j["active_drills"]==53
 
 def test_only_verified_publish_seed_is_searchable():
     r=client.get("/v1/drills",params={"limit":50})
@@ -135,3 +135,29 @@ def test_existing_legacy_rows_are_backfilled_to_hold():
         assert legacy.publication_status == "LEGACY_HOLD"
         assert legacy.surface_policy == "REFERENCE_ONLY"
         assert legacy.is_searchable is False
+
+
+def test_manual_b_candidates_are_seeded_but_not_searchable():
+    from app.db import SessionLocal
+    from app.models import Drill
+    candidate_ids = {
+        "EDGE-A1189","EDGE-A1700","EDGE-A196","EDGE-A197","EDGE-A198","EDGE-A218","EDGE-A219","EDGE-A220",
+        "EDGE-A221","EDGE-A222","EDGE-A291","EDGE-A292","EDGE-A293","EDGE-A294","EDGE-A295","EDGE-A346"
+    }
+    with SessionLocal() as db:
+        rows = db.query(Drill).filter(Drill.drill_id.in_(candidate_ids)).all()
+        assert {r.drill_id for r in rows} == candidate_ids
+        assert all(r.is_searchable is False for r in rows)
+        assert all(r.surface_policy == "DO_NOT_SURFACE" for r in rows)
+        assert all(r.publication_status == "ADAPTATION_QA" for r in rows)
+        assert all(r.source_asset for r in rows)
+        assert all(r.source_text for r in rows)
+        assert all(r.adaptation_text for r in rows)
+
+    r = client.get("/v1/drills/EDGE-A218")
+    assert r.status_code == 404
+
+    r = client.get("/v1/drills", params={"q":"puck support","limit":50})
+    assert r.status_code == 200
+    ids = {x["drill_id"] for x in r.json()["items"]}
+    assert not (ids & candidate_ids)
