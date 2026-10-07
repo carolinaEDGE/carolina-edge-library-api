@@ -10,6 +10,7 @@ EDGE_GAP_FILL_SEED = Path(__file__).resolve().parents[1] / "data" / "edge_gap_fi
 EDGE_GAP_FILL_SEED_V2 = Path(__file__).resolve().parents[1] / "data" / "edge_gap_fill_verified_v2.jsonl"
 EDGE_GAP_FILL_SEED_V3 = Path(__file__).resolve().parents[1] / "data" / "edge_gap_fill_verified_v3.jsonl"
 EDGE_GAP_FILL_SEED_V4 = Path(__file__).resolve().parents[1] / "data" / "edge_gap_fill_verified_v4.jsonl"
+EDGE_AGE_READINESS = Path(__file__).resolve().parents[1] / "data" / "edge_age_readiness_v1.jsonl"
 
 def _legacy_rows():
     return json.loads(LEGACY_SEED.read_text(encoding="utf-8"))
@@ -32,6 +33,9 @@ def _edge_rows():
         + _jsonl_rows(EDGE_GAP_FILL_SEED_V3)
         + _jsonl_rows(EDGE_GAP_FILL_SEED_V4)
     )
+
+def _readiness_rows():
+    return _jsonl_rows(EDGE_AGE_READINESS)
 
 def _normalize_goalies(value):
     text = (value or "").strip().upper()
@@ -122,5 +126,13 @@ def seed_drills(db: Session):
         rec.schema_version = d.get("schema_version")
         rec.is_searchable = bool(d.get("is_searchable"))
         rec.active = True
+    for g in _readiness_rows():
+        rec = db.get(Drill, g["edge_id"])
+        if rec is None:
+            continue
+        rec.edge_age_readiness_json = json.dumps(g.get("readiness") or {})
+        rec.edge_readiness_basis = g.get("basis")
+        rec.age_context_notes = g.get("note")
+
     db.commit()
     return created
