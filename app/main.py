@@ -75,7 +75,14 @@ def drill_to_dict(d: Drill):
         'representative_information':d.representative_information,'player_decisions':d.player_decisions,
         'space_organization':d.space_organization,'coach_notes':d.coach_notes,'schema_version':d.schema_version,
         'edge_age_readiness':json.loads(d.edge_age_readiness_json or '{}'),
-        'edge_readiness_basis':d.edge_readiness_basis
+        'edge_readiness_basis':d.edge_readiness_basis,
+        'source_active_players_min':d.source_active_players_min,
+        'source_active_players_max':d.source_active_players_max,
+        'edge_station_group_min':d.edge_station_group_min,
+        'edge_station_group_max':d.edge_station_group_max,
+        'simultaneous_goalies':d.simultaneous_goalies,
+        'capacity_basis':d.capacity_basis,
+        'capacity_notes':d.capacity_notes
     }
 @app.get('/')
 def root():
@@ -144,7 +151,8 @@ def _readiness_value(d: Drill, age: str|None):
         return None
 
 def _recommendation_score(d: Drill, q: str|None, game_problem: str|None, family: str|None,
-                          readiness_age: str|None, ice: str|None, goalies: int|None):
+                          readiness_age: str|None, ice: str|None, goalies: int|None,
+                          players: int|None):
     score = 0
     reasons = []
     blob = _text_blob(d)
@@ -210,6 +218,24 @@ def _recommendation_score(d: Drill, q: str|None, game_problem: str|None, family:
             score -= 12
         elif not wants_goalie and g == "YES":
             score -= 8
+        if d.simultaneous_goalies is not None:
+            if goalies == d.simultaneous_goalies:
+                score += 6
+                reasons.append("simultaneous-goalie capacity match")
+            elif goalies > 0 and d.simultaneous_goalies == 0:
+                score -= 4
+
+    if players is not None and d.edge_station_group_min is not None and d.edge_station_group_max is not None:
+        if d.edge_station_group_min <= players <= d.edge_station_group_max:
+            score += 14
+            reasons.append("station group-size match")
+        elif players < d.edge_station_group_min:
+            score -= 10
+            reasons.append("below recommended station group")
+        else:
+            over = players - d.edge_station_group_max
+            score -= min(12, 4 + over)
+            reasons.append("above recommended station group")
 
     if d.representative_information:
         score += 4
@@ -232,7 +258,7 @@ def recommend_drills(q: str|None=None, game_problem: str|None=None, family: str|
     ranked = []
     for d in rows:
         score, reasons, readiness = _recommendation_score(
-            d, q, game_problem, family, readiness_age, ice, goalies
+            d, q, game_problem, family, readiness_age, ice, goalies, players
         )
         if readiness == "DO NOT RUSH":
             continue
@@ -244,13 +270,12 @@ def recommend_drills(q: str|None=None, game_problem: str|None=None, family: str|
         item["requested_readiness"] = readiness
         ranked.append(item)
     ranked.sort(key=lambda x: (-x["recommendation_score"], x["drill_id"]))
-    note = "Player count is accepted as context but is not yet scored because the current library does not have structured min/max player-capacity data."
     return {
         "count": min(len(ranked), limit),
         "items": ranked[:limit],
-        "ranking_version": "EDGE_RECOMMENDER_V1",
+        "ranking_version": "EDGE_RECOMMENDER_V2",
         "players_requested": players,
-        "note": note
+        "note": "Player count is scored against Carolina EDGE editorial station-group ranges; source active-player counts remain separately identified as source-derived."
     }
 
 @app.get('/v1/drills/{drill_id}')
