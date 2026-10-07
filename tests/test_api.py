@@ -375,3 +375,50 @@ def test_readiness_filter_supports_practice_edge_without_rewriting_source_age():
     assert j["best_ages"] == "U15"
     assert j["edge_readiness_basis"] == "CAROLINA_EDGE_EDITORIAL_V1"
     assert j["edge_age_readiness"]["14U"] == "PRIORITIZE NOW"
+
+
+def test_recommendation_ranking_prefers_game_problem_and_age_readiness():
+    r = client.get("/v1/recommendations", params={
+        "q":"puck support",
+        "game_problem":"support",
+        "readiness_age":"10U",
+        "limit":5
+    })
+    assert r.status_code == 200
+    j = r.json()
+    assert j["ranking_version"] == "EDGE_RECOMMENDER_V1"
+    ids = [x["drill_id"] for x in j["items"]]
+    assert ids
+    assert "EDGE-A218" in ids or "EDGE-A170" in ids or "EDGE-A219" in ids
+    assert all(x["requested_readiness"] != "DO NOT RUSH" for x in j["items"])
+    scores = [x["recommendation_score"] for x in j["items"]]
+    assert scores == sorted(scores, reverse=True)
+
+def test_recommendation_ranking_respects_goalie_and_ice_context():
+    r = client.get("/v1/recommendations", params={
+        "q":"rebound",
+        "readiness_age":"12U",
+        "goalies":1,
+        "limit":5
+    })
+    assert r.status_code == 200
+    j = r.json()
+    ids = [x["drill_id"] for x in j["items"]]
+    assert "EDGE-A1241" in ids or "EDGE-A1129" in ids or "EDGE-A194" in ids
+
+def test_recommendation_endpoint_never_surfaces_hidden_or_legacy_records():
+    r = client.get("/v1/recommendations", params={"q":"angling","readiness_age":"12U","limit":20})
+    assert r.status_code == 200
+    for item in r.json()["items"]:
+        assert item["surface_policy"] == "PUBLISH_NOW"
+        assert item["publication_status"] == "READY FOR IMPORT"
+        assert item["drill_id"].startswith("EDGE-A")
+    hidden = {"EDGE-A1189","EDGE-A221","EDGE-A222","EDGE-A346"}
+    assert not ({x["drill_id"] for x in r.json()["items"]} & hidden)
+
+def test_recommendation_player_count_is_explicitly_not_scored_yet():
+    r = client.get("/v1/recommendations", params={"q":"2v2","players":8,"limit":3})
+    assert r.status_code == 200
+    j = r.json()
+    assert j["players_requested"] == 8
+    assert "not yet scored" in j["note"]
