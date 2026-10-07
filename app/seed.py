@@ -5,18 +5,22 @@ from .models import Drill
 
 LEGACY_SEED = Path(__file__).resolve().parents[1] / "data" / "drills.json"
 EDGE_PUBLISH_SEED = Path(__file__).resolve().parents[1] / "data" / "edge_seed_publish_v1.jsonl"
+EDGE_ADAPT_CANDIDATE_SEED = Path(__file__).resolve().parents[1] / "data" / "edge_manual_b_verified_candidates_v1.jsonl"
 
 def _legacy_rows():
     return json.loads(LEGACY_SEED.read_text(encoding="utf-8"))
 
-def _edge_rows():
-    if not EDGE_PUBLISH_SEED.exists():
+def _jsonl_rows(path: Path):
+    if not path.exists():
         return []
     return [
         json.loads(line)
-        for line in EDGE_PUBLISH_SEED.read_text(encoding="utf-8").splitlines()
+        for line in path.read_text(encoding="utf-8").splitlines()
         if line.strip()
     ]
+
+def _edge_rows():
+    return _jsonl_rows(EDGE_PUBLISH_SEED) + _jsonl_rows(EDGE_ADAPT_CANDIDATE_SEED)
 
 def _normalize_goalies(value):
     text = (value or "").strip().upper()
