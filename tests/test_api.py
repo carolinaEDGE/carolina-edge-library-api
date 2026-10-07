@@ -196,3 +196,21 @@ def test_promoted_adaptations_are_searchable_and_remaining_candidates_stay_hidde
     ids = {x["drill_id"] for x in r.json()["items"]}
     assert {"EDGE-A218","EDGE-A219","EDGE-A197","EDGE-A198"} & ids
     assert not (hidden & ids)
+
+
+def test_retrieval_taxonomy_is_seeded_for_publish_records():
+    from app.db import SessionLocal
+    from app.models import Drill
+    ids = {"EDGE-A002","EDGE-A009","EDGE-A218","EDGE-A219","EDGE-A295"}
+    with SessionLocal() as db:
+        rows = {r.drill_id:r for r in db.query(Drill).filter(Drill.drill_id.in_(ids)).all()}
+        assert rows["EDGE-A002"].family == "Retrieval / Breakout"
+        assert "forecheck pressure" in (rows["EDGE-A002"].search_tags_json or "")
+        assert rows["EDGE-A009"].family == "Transition / Numerical Advantage"
+        assert "3v2" in (rows["EDGE-A009"].search_tags_json or "")
+        assert rows["EDGE-A218"].family == "Puck Support / Small-Area Game"
+        assert "puck support" in (rows["EDGE-A218"].search_tags_json or "")
+        assert rows["EDGE-A219"].family == "Puck Support / Small-Area Game"
+        assert "penalty kill" in (rows["EDGE-A219"].search_tags_json or "")
+        assert rows["EDGE-A295"].family == "Puck Support / Offensive Zone"
+        assert "seam" in (rows["EDGE-A295"].search_tags_json or "")
