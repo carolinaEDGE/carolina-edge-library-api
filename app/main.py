@@ -518,7 +518,39 @@ def build_practice_blueprint(total_players: int=Query(...,ge=6,le=40),
             "goalie_capacity_considered":True,
             "unique_station_activities":True
         },
-        "note":"This is a deterministic Practice EDGE blueprint. Diagram generation and finished practice-document rendering remain downstream steps."
+        "diagram_handoff":{
+            "status":"READY_FOR_MODEL_GEOMETRY",
+            "must_validate_before_render":True,
+            "geometry_boundary":"Generated rink geometry is Carolina EDGE presentation geometry unless the source explicitly supplies the exact spatial fact.",
+            "stations":[
+                {
+                    "station":s["station"],
+                    "group_size":s["group_size"],
+                    "goalies_allocated":s.get("goalies_allocated",0),
+                    "drill_id":s["drill"]["drill_id"],
+                    "title":s["drill"]["name"],
+                    "source_text":s["drill"].get("source_text"),
+                    "space_organization":s["drill"].get("space_organization"),
+                    "goalies":s["drill"].get("goalies"),
+                    "source_boundary":s["drill"].get("source_boundary"),
+                    "diagram_request_status":"NEEDS_MODEL_GEOMETRY"
+                }
+                for s in station_set["items"] if s.get("drill")
+            ],
+            "final_game":(
+                {
+                    "drill_id":final_game["activity"]["drill_id"],
+                    "title":final_game["activity"]["name"],
+                    "source_text":final_game["activity"].get("source_text"),
+                    "space_organization":final_game["activity"].get("space_organization"),
+                    "goalies":final_game["activity"].get("goalies"),
+                    "source_boundary":final_game["activity"].get("source_boundary"),
+                    "diagram_request_status":"NEEDS_MODEL_GEOMETRY"
+                }
+                if final_game else None
+            )
+        },
+        "note":"This deterministic Practice EDGE blueprint is ready for the Diagram tool family. Geometry must be authored as Carolina EDGE presentation geometry, validated, and only then rendered/assembled."
     }
 
 @app.get('/v1/drills/{drill_id}')

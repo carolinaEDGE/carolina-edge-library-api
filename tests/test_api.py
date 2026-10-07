@@ -600,3 +600,46 @@ def test_practice_blueprint_station_choices_respect_source_active_player_minimum
             continue
         required = item["drill"].get("source_active_players_min")
         assert required is None or required <= item["group_size"]
+
+
+def test_practice_blueprint_exposes_safe_diagram_handoff():
+    r = client.get("/v1/practice-blueprint", params={
+        "total_players":16,
+        "goalies":2,
+        "total_minutes":60,
+        "game_problem":"puck support",
+        "readiness_age":"12U",
+        "ice":"half ice"
+    })
+    assert r.status_code == 200
+    j = r.json()
+    h = j["diagram_handoff"]
+    assert h["status"] == "READY_FOR_MODEL_GEOMETRY"
+    assert h["must_validate_before_render"] is True
+    assert "Carolina EDGE presentation geometry" in h["geometry_boundary"]
+    assert len(h["stations"]) == 4
+    for s in h["stations"]:
+        assert s["diagram_request_status"] == "NEEDS_MODEL_GEOMETRY"
+        assert s["drill_id"].startswith("EDGE-A")
+        assert s["title"]
+        assert s["source_text"]
+        assert s["source_boundary"]
+        assert "objects" not in s
+        assert "routes" not in s
+    if h["final_game"]:
+        assert h["final_game"]["diagram_request_status"] == "NEEDS_MODEL_GEOMETRY"
+        assert h["final_game"]["source_text"]
+        assert "objects" not in h["final_game"]
+        assert "routes" not in h["final_game"]
+
+def test_practice_blueprint_never_claims_generated_geometry_is_source_geometry():
+    r = client.get("/v1/practice-blueprint", params={
+        "total_players":18,
+        "goalies":2,
+        "game_problem":"transition",
+        "readiness_age":"12U"
+    })
+    assert r.status_code == 200
+    h = r.json()["diagram_handoff"]
+    assert h["must_validate_before_render"] is True
+    assert all(x["diagram_request_status"] == "NEEDS_MODEL_GEOMETRY" for x in h["stations"])
