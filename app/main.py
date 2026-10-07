@@ -128,6 +128,131 @@ def search_drills(q: str|None=None, game_problem: str|None=None, family: str|Non
     rows=qry.limit(limit).all()
     return {'count':len(rows),'items':[drill_to_dict(x) for x in rows], 'note':'EDGE 5 Elements should be evaluated in the coach\'s actual context; library search does not block lower-scoring drills.'}
 
+def _text_blob(d: Drill):
+    parts = [
+        d.name, d.family, d.primary_game_problem, d.target_behaviors, d.search_tags_json,
+        d.representative_information, d.player_decisions, d.source_text, d.coach_notes
+    ]
+    return " ".join(str(x or "") for x in parts).lower()
+
+def _readiness_value(d: Drill, age: str|None):
+    if not age:
+        return None
+    try:
+        return json.loads(d.edge_age_readiness_json or "{}").get(age)
+    except Exception:
+        return None
+
+def _recommendation_score(d: Drill, q: str|None, game_problem: str|None, family: str|None,
+                          readiness_age: str|None, ice: str|None, goalies: int|None):
+    score = 0
+    reasons = []
+    blob = _text_blob(d)
+
+    if game_problem:
+        gp = game_problem.lower().strip()
+        primary = (d.primary_game_problem or "").lower()
+        if gp and gp in primary:
+            score += 40
+            reasons.append("game problem match")
+        elif gp and gp in blob:
+            score += 24
+            reasons.append("related game-problem language")
+
+    if q:
+        term = q.lower().strip()
+        if term and term in (d.name or "").lower():
+            score += 24
+            reasons.append("title match")
+        elif term and term in (d.search_tags_json or "").lower():
+            score += 20
+            reasons.append("search-tag match")
+        elif term and term in blob:
+            score += 12
+            reasons.append("content match")
+
+    if family:
+        fam = family.lower().strip()
+        if fam and fam in (d.family or "").lower():
+            score += 16
+            reasons.append("family match")
+
+    readiness = _readiness_value(d, readiness_age)
+    readiness_points = {
+        "PRIORITIZE NOW": 24,
+        "INTRODUCE": 16,
+        "CONTINUE DEVELOPING": 12,
+        "DO NOT RUSH": -60,
+    }
+    if readiness:
+        score += readiness_points.get(readiness, 0)
+        reasons.append(f"{readiness_age} readiness: {readiness}")
+
+    if ice:
+        requested = ice.lower().strip()
+        actual = (d.ice_footprint or "").lower()
+        if requested and requested in actual:
+            score += 10
+            reasons.append("ice-space match")
+        elif requested and actual:
+            score -= 4
+
+    if goalies is not None:
+        g = (d.goalies or "").upper()
+        wants_goalie = goalies > 0
+        if wants_goalie and g == "YES":
+            score += 10
+            reasons.append("goalie match")
+        elif not wants_goalie and g == "NO":
+            score += 10
+            reasons.append("no-goalie match")
+        elif wants_goalie and g == "NO":
+            score -= 12
+        elif not wants_goalie and g == "YES":
+            score -= 8
+
+    if d.representative_information:
+        score += 4
+        reasons.append("representative cues documented")
+    if d.player_decisions:
+        score += 4
+        reasons.append("player decisions documented")
+    if d.source_evidence and "VERIFIED" in d.source_evidence.upper():
+        score += 4
+        reasons.append("source verified")
+
+    return score, reasons, readiness
+
+@app.get('/v1/recommendations')
+def recommend_drills(q: str|None=None, game_problem: str|None=None, family: str|None=None,
+                     readiness_age: str|None=None, ice: str|None=None, goalies: int|None=None,
+                     players: int|None=None, limit: int=Query(5,ge=1,le=20),
+                     db:Session=Depends(get_db)):
+    rows = db.query(Drill).filter(Drill.active.is_(True), Drill.is_searchable.is_(True)).all()
+    ranked = []
+    for d in rows:
+        score, reasons, readiness = _recommendation_score(
+            d, q, game_problem, family, readiness_age, ice, goalies
+        )
+        if readiness == "DO NOT RUSH":
+            continue
+        if (q or game_problem or family) and score <= 0:
+            continue
+        item = drill_to_dict(d)
+        item["recommendation_score"] = score
+        item["recommendation_reasons"] = reasons
+        item["requested_readiness"] = readiness
+        ranked.append(item)
+    ranked.sort(key=lambda x: (-x["recommendation_score"], x["drill_id"]))
+    note = "Player count is accepted as context but is not yet scored because the current library does not have structured min/max player-capacity data."
+    return {
+        "count": min(len(ranked), limit),
+        "items": ranked[:limit],
+        "ranking_version": "EDGE_RECOMMENDER_V1",
+        "players_requested": players,
+        "note": note
+    }
+
 @app.get('/v1/drills/{drill_id}')
 def get_drill(drill_id:str, db:Session=Depends(get_db)):
     d=db.get(Drill,drill_id)
