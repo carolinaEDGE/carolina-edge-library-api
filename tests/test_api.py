@@ -21,16 +21,20 @@ def test_health_and_seed():
     assert j["drills"]==53
     assert j["active_drills"]==53
 
-def test_only_verified_publish_seed_is_searchable():
+def test_only_approved_publish_records_are_searchable():
     r=client.get("/v1/drills",params={"limit":50})
     assert r.status_code==200
     j=r.json()
-    assert j["count"]==12
-    assert {x["drill_id"] for x in j["items"]} == {
+    expected = {
         "EDGE-A002","EDGE-A006","EDGE-A009","EDGE-A010","EDGE-A011","EDGE-A012",
-        "EDGE-A014","EDGE-A106","EDGE-A107","EDGE-A108","EDGE-A109","EDGE-A110"
+        "EDGE-A014","EDGE-A106","EDGE-A107","EDGE-A108","EDGE-A109","EDGE-A110",
+        "EDGE-A1700","EDGE-A196","EDGE-A197","EDGE-A198","EDGE-A218","EDGE-A219",
+        "EDGE-A220","EDGE-A291","EDGE-A292","EDGE-A293","EDGE-A294","EDGE-A295"
     }
+    assert j["count"]==24
+    assert {x["drill_id"] for x in j["items"]} == expected
     assert all(x["surface_policy"]=="PUBLISH_NOW" for x in j["items"])
+    assert all(x["publication_status"]=="READY FOR IMPORT" for x in j["items"])
 
 def test_legacy_drill_is_isolated():
     r=client.get("/v1/drills/IQ-001")
@@ -137,27 +141,58 @@ def test_existing_legacy_rows_are_backfilled_to_hold():
         assert legacy.is_searchable is False
 
 
-def test_manual_b_candidates_are_seeded_but_not_searchable():
+def test_manual_b_candidates_are_seeded_with_selective_publication():
     from app.db import SessionLocal
     from app.models import Drill
-    candidate_ids = {
-        "EDGE-A1189","EDGE-A1700","EDGE-A196","EDGE-A197","EDGE-A198","EDGE-A218","EDGE-A219","EDGE-A220",
-        "EDGE-A221","EDGE-A222","EDGE-A291","EDGE-A292","EDGE-A293","EDGE-A294","EDGE-A295","EDGE-A346"
+    promoted = {
+        "EDGE-A1700","EDGE-A196","EDGE-A197","EDGE-A198","EDGE-A218","EDGE-A219",
+        "EDGE-A220","EDGE-A291","EDGE-A292","EDGE-A293","EDGE-A294","EDGE-A295"
     }
+    hidden = {"EDGE-A1189","EDGE-A221","EDGE-A222","EDGE-A346"}
+    candidate_ids = promoted | hidden
     with SessionLocal() as db:
         rows = db.query(Drill).filter(Drill.drill_id.in_(candidate_ids)).all()
         assert {r.drill_id for r in rows} == candidate_ids
-        assert all(r.is_searchable is False for r in rows)
-        assert all(r.surface_policy == "DO_NOT_SURFACE" for r in rows)
-        assert all(r.publication_status == "ADAPTATION_QA" for r in rows)
-        assert all(r.source_asset for r in rows)
-        assert all(r.source_text for r in rows)
-        assert all(r.adaptation_text for r in rows)
+        for r in rows:
+            assert r.source_asset
+            assert r.source_text
+            assert r.adaptation_text
+            if r.drill_id in promoted:
+                assert r.is_searchable is True
+                assert r.surface_policy == "PUBLISH_NOW"
+                assert r.publication_status == "READY FOR IMPORT"
+            else:
+                assert r.is_searchable is False
+                assert r.surface_policy == "DO_NOT_SURFACE"
+                assert r.publication_status == "ADAPTATION_QA"
 
     r = client.get("/v1/drills/EDGE-A218")
+    assert r.status_code == 200
+
+    r = client.get("/v1/drills/EDGE-A221")
     assert r.status_code == 404
+
+
+def test_promoted_adaptations_are_searchable_and_remaining_candidates_stay_hidden():
+    promoted = {
+        "EDGE-A1700","EDGE-A196","EDGE-A197","EDGE-A198","EDGE-A218","EDGE-A219",
+        "EDGE-A220","EDGE-A291","EDGE-A292","EDGE-A293","EDGE-A294","EDGE-A295"
+    }
+    hidden = {"EDGE-A1189","EDGE-A221","EDGE-A222","EDGE-A346"}
+
+    for drill_id in promoted:
+        r = client.get(f"/v1/drills/{drill_id}")
+        assert r.status_code == 200
+        j = r.json()
+        assert j["publication_status"] == "READY FOR IMPORT"
+        assert j["surface_policy"] == "PUBLISH_NOW"
+
+    for drill_id in hidden:
+        r = client.get(f"/v1/drills/{drill_id}")
+        assert r.status_code == 404
 
     r = client.get("/v1/drills", params={"q":"puck support","limit":50})
     assert r.status_code == 200
     ids = {x["drill_id"] for x in r.json()["items"]}
-    assert not (ids & candidate_ids)
+    assert {"EDGE-A218","EDGE-A219","EDGE-A197","EDGE-A198"} & ids
+    assert not (hidden & ids)
