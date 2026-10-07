@@ -300,6 +300,12 @@ def recommend_practice_stations(total_players: int=Query(...,ge=2,le=40),
         for d in rows:
             if d.drill_id in used:
                 continue
+            # A station cannot recommend an activity that needs more simultaneously
+            # active skaters than the station group actually contains. Editorial group
+            # ranges remain a ranking preference, but source-derived active-player
+            # minimums are a hard feasibility boundary.
+            if d.source_active_players_min is not None and d.source_active_players_min > group_size:
+                continue
             score, reasons, readiness = _recommendation_score(
                 d, q, game_problem, None, readiness_age, ice, None, group_size
             )
