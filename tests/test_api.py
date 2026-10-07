@@ -512,3 +512,55 @@ def test_practice_station_recommendations_handle_uneven_groups():
     j = r.json()
     assert j["group_sizes"] == [5,5,4,4]
     assert sum(j["group_sizes"]) == 18
+
+
+def test_practice_blueprint_builds_approved_60_minute_structure():
+    r = client.get("/v1/practice-blueprint", params={
+        "total_players":16,
+        "goalies":2,
+        "total_minutes":60,
+        "game_problem":"puck support",
+        "readiness_age":"12U",
+        "ice":"half ice"
+    })
+    assert r.status_code == 200
+    j = r.json()
+    assert j["blueprint_version"] == "EDGE_PRACTICE_BLUEPRINT_V1"
+    assert j["template_basis"] == "CAROLINA_EDGE_EDITORIAL_60_MIN_V1"
+    assert [x["duration"] for x in j["schedule"]] == [5,31,12,10,2]
+    assert sum(x["duration"] for x in j["schedule"]) == 60
+    station = j["schedule"][1]
+    assert len(station["stations"]) == 4
+    assert len(station["periods"]) == 4
+    assert [x["start_minute"] for x in station["periods"]] == [5,13,21,29]
+    ids = [x["drill"]["drill_id"] for x in station["stations"] if x.get("drill")]
+    assert len(ids) == len(set(ids))
+    assert all(x["drill"]["surface_policy"] == "PUBLISH_NOW" for x in station["stations"] if x.get("drill"))
+    final_game = j["schedule"][3]["game"]
+    assert final_game is not None
+    assert final_game["activity"]["surface_policy"] == "PUBLISH_NOW"
+
+def test_practice_blueprint_excludes_do_not_rush_for_requested_age():
+    r = client.get("/v1/practice-blueprint", params={
+        "total_players":16,
+        "goalies":2,
+        "game_problem":"forecheck",
+        "readiness_age":"10U"
+    })
+    assert r.status_code == 200
+    j = r.json()
+    for s in j["schedule"][1]["stations"]:
+        if s.get("drill"):
+            assert s["drill"]["requested_readiness"] != "DO NOT RUSH"
+    fg = j["schedule"][3]["game"]
+    if fg:
+        assert fg["activity"]["requested_readiness"] != "DO NOT RUSH"
+
+def test_practice_blueprint_rejects_non_60_minute_template_for_now():
+    r = client.get("/v1/practice-blueprint", params={
+        "total_players":16,
+        "goalies":2,
+        "total_minutes":75
+    })
+    assert r.status_code == 400
+    assert "60-minute template" in r.json()["detail"]
