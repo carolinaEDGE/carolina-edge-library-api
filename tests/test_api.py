@@ -480,3 +480,35 @@ def test_recommendation_ranking_uses_simultaneous_goalie_capacity():
     assert r.status_code == 200
     j = r.json()
     assert any("simultaneous-goalie capacity match" in x["recommendation_reasons"] for x in j["items"])
+
+
+def test_practice_station_recommendations_distribute_players_and_goalies():
+    r = client.get("/v1/practice-station-recommendations", params={
+        "total_players":16,
+        "stations":4,
+        "goalies":2,
+        "q":"puck support",
+        "readiness_age":"12U"
+    })
+    assert r.status_code == 200
+    j = r.json()
+    assert j["ranking_version"] == "EDGE_STATION_SET_V1"
+    assert j["group_sizes"] == [4,4,4,4]
+    assert len(j["items"]) == 4
+    assert sum(x.get("goalies_allocated",0) for x in j["items"]) <= 2
+    ids = [x["drill"]["drill_id"] for x in j["items"] if x["drill"]]
+    assert len(ids) == len(set(ids))
+    assert all(x["drill"]["surface_policy"] == "PUBLISH_NOW" for x in j["items"] if x["drill"])
+
+def test_practice_station_recommendations_handle_uneven_groups():
+    r = client.get("/v1/practice-station-recommendations", params={
+        "total_players":18,
+        "stations":4,
+        "goalies":2,
+        "q":"transition",
+        "readiness_age":"12U"
+    })
+    assert r.status_code == 200
+    j = r.json()
+    assert j["group_sizes"] == [5,5,4,4]
+    assert sum(j["group_sizes"]) == 18
