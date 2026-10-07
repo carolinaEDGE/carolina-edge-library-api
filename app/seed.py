@@ -18,6 +18,27 @@ def _edge_rows():
         if line.strip()
     ]
 
+def _normalize_goalies(value):
+    text = (value or "").strip().upper()
+    if text.startswith("NO"):
+        return "NO"
+    if text.startswith("YES") or "GOALIE" in text or "NET SHOWN" in text:
+        return "YES"
+    return "UNKNOWN"
+
+def _ice_footprint(value):
+    text = (value or "").strip()
+    upper = text.upper()
+    if "FULL ICE" in upper:
+        return "FULL ICE"
+    if "HALF-ICE" in upper or "HALF ICE" in upper:
+        return "HALF ICE"
+    if "END-ZONE" in upper or "END ZONE" in upper:
+        return "END ZONE"
+    if "SMALL-AREA" in upper or "SMALL AREA" in upper:
+        return "SMALL AREA"
+    return None
+
 def seed_drills(db: Session):
     created = 0
     if db.query(Drill).count() == 0:
@@ -46,13 +67,17 @@ def seed_drills(db: Session):
         rec.name = d["title"]
         rec.review_status = "SOURCE VERIFIED"
         rec.primary_game_problem = d.get("game_problem")
-        rec.goalies = d.get("goalie")
-        rec.ice_footprint = d.get("space_organization")
+        rec.goalies = _normalize_goalies(d.get("goalie"))
+        rec.ice_footprint = _ice_footprint(d.get("space_organization"))
         rec.setup_summary = d.get("space_organization")
         rec.how_it_runs = d.get("source_text")
         rec.decision_cue_summary = d.get("representative_information")
         rec.decision_options_summary = d.get("player_decisions")
-        rec.source_json = json.dumps({"source_asset": d.get("source_asset"), "source_evidence": d.get("source_evidence")})
+        rec.source_json = json.dumps({
+            "source_asset": d.get("source_asset"),
+            "source_evidence": d.get("source_evidence"),
+            "goalie_source": d.get("goalie"),
+        })
         rec.record_type = d.get("record_type")
         rec.route = d.get("route")
         rec.publication_status = d.get("publication_status")
