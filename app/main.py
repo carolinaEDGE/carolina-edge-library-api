@@ -101,7 +101,17 @@ def search_drills(q: str|None=None, game_problem: str|None=None, family: str|Non
                   ice: str|None=None, goalies: int|None=None, limit: int=Query(10,ge=1,le=50), db:Session=Depends(get_db)):
     qry=db.query(Drill).filter(Drill.active.is_(True), Drill.is_searchable.is_(True))
     if q:
-        like=f"%{q}%"; qry=qry.filter(or_(Drill.name.ilike(like),Drill.primary_game_problem.ilike(like),Drill.target_behaviors.ilike(like),Drill.search_tags_json.ilike(like)))
+        like=f"%{q}%"
+        qry=qry.filter(or_(
+            Drill.name.ilike(like),
+            Drill.primary_game_problem.ilike(like),
+            Drill.target_behaviors.ilike(like),
+            Drill.search_tags_json.ilike(like),
+            Drill.representative_information.ilike(like),
+            Drill.player_decisions.ilike(like),
+            Drill.source_text.ilike(like),
+            Drill.coach_notes.ilike(like)
+        ))
     if game_problem: qry=qry.filter(Drill.primary_game_problem.ilike(f"%{game_problem}%"))
     if family: qry=qry.filter(Drill.family.ilike(f"%{family}%"))
     if age: qry=qry.filter(or_(Drill.best_ages.is_(None), Drill.best_ages.ilike(f"%{age}%")))
