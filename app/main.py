@@ -278,6 +278,79 @@ def recommend_drills(q: str|None=None, game_problem: str|None=None, family: str|
         "note": "Player count is scored against Carolina EDGE editorial station-group ranges; source active-player counts remain separately identified as source-derived."
     }
 
+@app.get('/v1/practice-station-recommendations')
+def recommend_practice_stations(total_players: int=Query(...,ge=2,le=40),
+                                  stations: int=Query(4,ge=1,le=8),
+                                  goalies: int=Query(0,ge=0,le=8),
+                                  q: str|None=None,
+                                  game_problem: str|None=None,
+                                  readiness_age: str|None=None,
+                                  ice: str|None=None,
+                                  db:Session=Depends(get_db)):
+    base = total_players // stations
+    extra = total_players % stations
+    group_sizes = [base + (1 if i < extra else 0) for i in range(stations)]
+    rows = db.query(Drill).filter(Drill.active.is_(True), Drill.is_searchable.is_(True)).all()
+    selected = []
+    used = set()
+    goalies_remaining = goalies
+
+    for idx, group_size in enumerate(group_sizes, start=1):
+        candidates = []
+        for d in rows:
+            if d.drill_id in used:
+                continue
+            score, reasons, readiness = _recommendation_score(
+                d, q, game_problem, None, readiness_age, ice, None, group_size
+            )
+            if readiness == "DO NOT RUSH":
+                continue
+            if (q or game_problem) and score <= 0:
+                continue
+            required_goalies = d.simultaneous_goalies or 0
+            if required_goalies > goalies_remaining and required_goalies > 0:
+                score -= 20
+                reasons = reasons + ["goalie capacity unavailable"]
+            elif required_goalies > 0:
+                score += 8
+                reasons = reasons + ["goalie allocation available"]
+            candidates.append((score, d.drill_id, d, reasons, readiness, required_goalies))
+
+        candidates.sort(key=lambda x: (-x[0], x[1]))
+        if not candidates:
+            selected.append({"station":idx,"group_size":group_size,"status":"NO_MATCH","drill":None})
+            continue
+
+        score, _, d, reasons, readiness, required_goalies = candidates[0]
+        used.add(d.drill_id)
+        allocated_goalies = 0
+        if required_goalies <= goalies_remaining:
+            allocated_goalies = required_goalies
+            goalies_remaining -= allocated_goalies
+
+        item = drill_to_dict(d)
+        item["recommendation_score"] = score
+        item["recommendation_reasons"] = reasons
+        item["requested_readiness"] = readiness
+        selected.append({
+            "station":idx,
+            "group_size":group_size,
+            "goalies_allocated":allocated_goalies,
+            "status":"RECOMMENDED",
+            "drill":item
+        })
+
+    return {
+        "ranking_version":"EDGE_STATION_SET_V1",
+        "total_players":total_players,
+        "stations":stations,
+        "group_sizes":group_sizes,
+        "goalies_requested":goalies,
+        "goalies_unallocated":goalies_remaining,
+        "items":selected,
+        "note":"Capacity-compatible activity selection only; full Practice EDGE still controls sequencing, timing, progression, and coaching context."
+    }
+
 @app.get('/v1/drills/{drill_id}')
 def get_drill(drill_id:str, db:Session=Depends(get_db)):
     d=db.get(Drill,drill_id)
