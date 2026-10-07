@@ -26,11 +26,13 @@ from .schemas import (
     GameCheckInCreate
 )
 from .seed import seed_drills
+from .migrations import migrate_v02
 
-VERSION="0.1.0"
+VERSION="0.2.0-staging"
 app=FastAPI(title="Carolina EDGE Library API", version=VERSION, description="Drill and practice library service for Carolina EDGE. EDGE 5 Elements is informative, never a creation/use gate.")
 
 Base.metadata.create_all(bind=engine)
+migrate_v02(engine)
 
 with engine.begin() as conn:
     conn.exec_driver_sql(
@@ -66,7 +68,11 @@ def drill_to_dict(d: Drill):
         'coaching_cues':json.loads(d.coaching_cues_json or '[]'),'guided_questions':json.loads(d.guided_questions_json or '[]'),
         'constraints_progressions':json.loads(d.constraints_json or '[]'),'why_it_works':d.why_it_works,'search_tags':json.loads(d.search_tags_json or '[]'),
         'decision_cue_summary':d.decision_cue_summary,'decision_options_summary':d.decision_options_summary,
-        'game_like_evidence':d.game_like_evidence,'age_context_notes':d.age_context_notes
+        'game_like_evidence':d.game_like_evidence,'age_context_notes':d.age_context_notes,
+        'publication_status':d.publication_status,'surface_policy':d.surface_policy,'source_evidence':d.source_evidence,
+        'source_text':d.source_text,'source_asset':d.source_asset,'source_boundary':d.source_boundary,
+        'representative_information':d.representative_information,'player_decisions':d.player_decisions,
+        'space_organization':d.space_organization,'coach_notes':d.coach_notes,'schema_version':d.schema_version
     }
 @app.get('/')
 def root():
@@ -92,7 +98,7 @@ def health(db: Session=Depends(get_db)):
 @app.get('/v1/drills')
 def search_drills(q: str|None=None, game_problem: str|None=None, family: str|None=None, age: str|None=None,
                   ice: str|None=None, goalies: int|None=None, limit: int=Query(10,ge=1,le=50), db:Session=Depends(get_db)):
-    qry=db.query(Drill).filter(Drill.active.is_(True))
+    qry=db.query(Drill).filter(Drill.active.is_(True), Drill.is_searchable.is_(True))
     if q:
         like=f"%{q}%"; qry=qry.filter(or_(Drill.name.ilike(like),Drill.primary_game_problem.ilike(like),Drill.target_behaviors.ilike(like),Drill.search_tags_json.ilike(like)))
     if game_problem: qry=qry.filter(Drill.primary_game_problem.ilike(f"%{game_problem}%"))
@@ -105,7 +111,7 @@ def search_drills(q: str|None=None, game_problem: str|None=None, family: str|Non
 @app.get('/v1/drills/{drill_id}')
 def get_drill(drill_id:str, db:Session=Depends(get_db)):
     d=db.get(Drill,drill_id)
-    if not d: raise HTTPException(404,'Drill not found')
+    if not d or not d.active or not d.is_searchable: raise HTTPException(404,'Drill not found')
     return drill_to_dict(d)
 
 @app.post('/v1/evaluations')
