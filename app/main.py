@@ -26,29 +26,32 @@ from .schemas import (
     GameCheckInCreate
 )
 from .seed import seed_drills
+from .migrations import migrate_v02
 
-VERSION="0.1.0"
+VERSION="0.2.0-staging"
 app=FastAPI(title="Carolina EDGE Library API", version=VERSION, description="Drill and practice library service for Carolina EDGE. EDGE 5 Elements is informative, never a creation/use gate.")
 
 Base.metadata.create_all(bind=engine)
+migrate_v02(engine)
 
-with engine.begin() as conn:
-    conn.exec_driver_sql(
-        """
-        ALTER TABLE practice_activity_reviews
-        ALTER COLUMN goal_delivery TYPE TEXT,
-        ALTER COLUMN focus_element_1_result TYPE TEXT,
-        ALTER COLUMN focus_element_2_result TYPE TEXT,
-        ALTER COLUMN would_use_again TYPE TEXT
-        """
-    )
+if engine.dialect.name == "postgresql":
+    with engine.begin() as conn:
+        conn.exec_driver_sql(
+            """
+            ALTER TABLE practice_activity_reviews
+            ALTER COLUMN goal_delivery TYPE TEXT,
+            ALTER COLUMN focus_element_1_result TYPE TEXT,
+            ALTER COLUMN focus_element_2_result TYPE TEXT,
+            ALTER COLUMN would_use_again TYPE TEXT
+            """
+        )
 
-    conn.exec_driver_sql(
-        """
-        ALTER TABLE game_check_ins
-        ALTER COLUMN next_practice_decision TYPE TEXT
-        """
-    )
+        conn.exec_driver_sql(
+            """
+            ALTER TABLE game_check_ins
+            ALTER COLUMN next_practice_decision TYPE TEXT
+            """
+        )
 
 with next(get_db()) as db:
     seed_drills(db)
@@ -66,7 +69,11 @@ def drill_to_dict(d: Drill):
         'coaching_cues':json.loads(d.coaching_cues_json or '[]'),'guided_questions':json.loads(d.guided_questions_json or '[]'),
         'constraints_progressions':json.loads(d.constraints_json or '[]'),'why_it_works':d.why_it_works,'search_tags':json.loads(d.search_tags_json or '[]'),
         'decision_cue_summary':d.decision_cue_summary,'decision_options_summary':d.decision_options_summary,
-        'game_like_evidence':d.game_like_evidence,'age_context_notes':d.age_context_notes
+        'game_like_evidence':d.game_like_evidence,'age_context_notes':d.age_context_notes,
+        'publication_status':d.publication_status,'surface_policy':d.surface_policy,'source_evidence':d.source_evidence,
+        'source_text':d.source_text,'source_asset':d.source_asset,'source_boundary':d.source_boundary,
+        'representative_information':d.representative_information,'player_decisions':d.player_decisions,
+        'space_organization':d.space_organization,'coach_notes':d.coach_notes,'schema_version':d.schema_version
     }
 @app.get('/')
 def root():
@@ -92,9 +99,19 @@ def health(db: Session=Depends(get_db)):
 @app.get('/v1/drills')
 def search_drills(q: str|None=None, game_problem: str|None=None, family: str|None=None, age: str|None=None,
                   ice: str|None=None, goalies: int|None=None, limit: int=Query(10,ge=1,le=50), db:Session=Depends(get_db)):
-    qry=db.query(Drill).filter(Drill.active.is_(True))
+    qry=db.query(Drill).filter(Drill.active.is_(True), Drill.is_searchable.is_(True))
     if q:
-        like=f"%{q}%"; qry=qry.filter(or_(Drill.name.ilike(like),Drill.primary_game_problem.ilike(like),Drill.target_behaviors.ilike(like),Drill.search_tags_json.ilike(like)))
+        like=f"%{q}%"
+        qry=qry.filter(or_(
+            Drill.name.ilike(like),
+            Drill.primary_game_problem.ilike(like),
+            Drill.target_behaviors.ilike(like),
+            Drill.search_tags_json.ilike(like),
+            Drill.representative_information.ilike(like),
+            Drill.player_decisions.ilike(like),
+            Drill.source_text.ilike(like),
+            Drill.coach_notes.ilike(like)
+        ))
     if game_problem: qry=qry.filter(Drill.primary_game_problem.ilike(f"%{game_problem}%"))
     if family: qry=qry.filter(Drill.family.ilike(f"%{family}%"))
     if age: qry=qry.filter(or_(Drill.best_ages.is_(None), Drill.best_ages.ilike(f"%{age}%")))
@@ -105,7 +122,7 @@ def search_drills(q: str|None=None, game_problem: str|None=None, family: str|Non
 @app.get('/v1/drills/{drill_id}')
 def get_drill(drill_id:str, db:Session=Depends(get_db)):
     d=db.get(Drill,drill_id)
-    if not d: raise HTTPException(404,'Drill not found')
+    if not d or not d.active or not d.is_searchable: raise HTTPException(404,'Drill not found')
     return drill_to_dict(d)
 
 @app.post('/v1/evaluations')
