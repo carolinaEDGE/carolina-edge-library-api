@@ -161,3 +161,28 @@ def test_manual_b_candidates_are_seeded_but_not_searchable():
     assert r.status_code == 200
     ids = {x["drill_id"] for x in r.json()["items"]}
     assert not (ids & candidate_ids)
+
+
+def test_promoted_adaptations_are_searchable_and_remaining_candidates_stay_hidden():
+    promoted = {
+        "EDGE-A1700","EDGE-A196","EDGE-A197","EDGE-A198","EDGE-A218","EDGE-A219",
+        "EDGE-A220","EDGE-A291","EDGE-A292","EDGE-A293","EDGE-A294","EDGE-A295"
+    }
+    hidden = {"EDGE-A1189","EDGE-A221","EDGE-A222","EDGE-A346"}
+
+    for drill_id in promoted:
+        r = client.get(f"/v1/drills/{drill_id}")
+        assert r.status_code == 200
+        j = r.json()
+        assert j["publication_status"] == "READY FOR IMPORT"
+        assert j["surface_policy"] == "PUBLISH_NOW"
+
+    for drill_id in hidden:
+        r = client.get(f"/v1/drills/{drill_id}")
+        assert r.status_code == 404
+
+    r = client.get("/v1/drills", params={"q":"puck support","limit":50})
+    assert r.status_code == 200
+    ids = {x["drill_id"] for x in r.json()["items"]}
+    assert {"EDGE-A218","EDGE-A219","EDGE-A197","EDGE-A198"} & ids
+    assert not (hidden & ids)
