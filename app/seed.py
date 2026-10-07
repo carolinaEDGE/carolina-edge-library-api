@@ -41,6 +41,16 @@ def _ice_footprint(value):
 
 def seed_drills(db: Session):
     created = 0
+
+    # Existing pre-v0.2 production drills must remain preserved but not searchable.
+    db.query(Drill).filter(~Drill.drill_id.like("EDGE-A%")).update(
+        {
+            Drill.publication_status: "LEGACY_HOLD",
+            Drill.surface_policy: "REFERENCE_ONLY",
+            Drill.is_searchable: False,
+        },
+        synchronize_session=False,
+    )
     if db.query(Drill).count() == 0:
         for d in _legacy_rows():
             db.add(Drill(
