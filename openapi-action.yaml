@@ -1,8 +1,8 @@
 openapi: 3.1.0
 info:
   title: Carolina EDGE Library API
-  version: 0.1.0
-  description: Search Carolina EDGE drills, evaluate EDGE 5 Elements in context, and save user-created drills/practices.
+  version: 0.2.0
+  description: Search and rank approved Carolina EDGE activities, build Practice EDGE station sets and 60-minute blueprints, evaluate EDGE 5 Elements in context, and save user-created drills/practices.
 servers:
   - url: https://REPLACE-WITH-YOUR-RENDER-SERVICE.onrender.com
 paths:
@@ -37,6 +37,95 @@ paths:
           schema: {type: string}
       responses:
         '200': {description: Drill}
+  /v1/recommendations:
+    get:
+      operationId: recommendEdgeDrills
+      summary: Rank approved Carolina EDGE activities for a game problem and practice context.
+      parameters:
+        - {name: q, in: query, schema: {type: string}}
+        - {name: game_problem, in: query, schema: {type: string}}
+        - {name: family, in: query, schema: {type: string}}
+        - {name: readiness_age, in: query, schema: {type: string, enum: [8U, 10U, 12U, 14U, 16U-18U]}}
+        - {name: ice, in: query, schema: {type: string}}
+        - {name: goalies, in: query, schema: {type: integer, minimum: 0, maximum: 8}}
+        - {name: players, in: query, schema: {type: integer, minimum: 1, maximum: 40}}
+        - {name: limit, in: query, schema: {type: integer, default: 5, minimum: 1, maximum: 20}}
+      responses:
+        '200':
+          description: Ranked published activity recommendations
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [count, items, ranking_version]
+                properties:
+                  count: {type: integer}
+                  ranking_version: {type: string}
+                  players_requested: {type: [integer, 'null']}
+                  note: {type: string}
+                  items:
+                    type: array
+                    items: {type: object, additionalProperties: true}
+                additionalProperties: true
+  /v1/practice-station-recommendations:
+    get:
+      operationId: recommendPracticeStations
+      summary: Build a capacity-aware set of unique approved station activities.
+      parameters:
+        - {name: total_players, in: query, required: true, schema: {type: integer, minimum: 2, maximum: 40}}
+        - {name: stations, in: query, schema: {type: integer, default: 4, minimum: 1, maximum: 8}}
+        - {name: goalies, in: query, schema: {type: integer, default: 0, minimum: 0, maximum: 8}}
+        - {name: q, in: query, schema: {type: string}}
+        - {name: game_problem, in: query, schema: {type: string}}
+        - {name: readiness_age, in: query, schema: {type: string, enum: [8U, 10U, 12U, 14U, 16U-18U]}}
+        - {name: ice, in: query, schema: {type: string}}
+      responses:
+        '200':
+          description: Capacity-aware station set
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [ranking_version, total_players, stations, group_sizes, items]
+                properties:
+                  ranking_version: {type: string}
+                  total_players: {type: integer}
+                  stations: {type: integer}
+                  group_sizes: {type: array, items: {type: integer}}
+                  goalies_requested: {type: integer}
+                  goalies_unallocated: {type: integer}
+                  items: {type: array, items: {type: object, additionalProperties: true}}
+                  note: {type: string}
+                additionalProperties: true
+  /v1/practice-blueprint:
+    get:
+      operationId: buildPracticeBlueprint
+      summary: Build the approved 60-minute Carolina EDGE practice blueprint from published Library activities.
+      parameters:
+        - {name: total_players, in: query, required: true, schema: {type: integer, minimum: 6, maximum: 40}}
+        - {name: goalies, in: query, schema: {type: integer, default: 0, minimum: 0, maximum: 8}}
+        - {name: total_minutes, in: query, schema: {type: integer, enum: [60], default: 60}}
+        - {name: game_problem, in: query, schema: {type: string}}
+        - {name: q, in: query, schema: {type: string}}
+        - {name: readiness_age, in: query, schema: {type: string, enum: [8U, 10U, 12U, 14U, 16U-18U]}}
+        - {name: ice, in: query, schema: {type: string}}
+      responses:
+        '200':
+          description: Deterministic 60-minute Practice EDGE blueprint
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [blueprint_version, template_basis, inputs, schedule, quality_controls, diagram_handoff]
+                properties:
+                  blueprint_version: {type: string}
+                  template_basis: {type: string}
+                  inputs: {type: object, additionalProperties: true}
+                  schedule: {type: array, items: {type: object, additionalProperties: true}}
+                  quality_controls: {type: object, additionalProperties: true}
+                  diagram_handoff: {type: object, additionalProperties: true}
+                  note: {type: string}
+                additionalProperties: true
   /v1/evaluations:
     post:
       operationId: evaluateEdge5Elements
